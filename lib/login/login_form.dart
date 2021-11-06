@@ -1,4 +1,10 @@
+import 'package:diet_app/auth/user_auth_repository.dart';
+import 'package:diet_app/home/home_page.dart';
+import 'package:diet_app/login/login_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:diet_app/home/home_page.dart';
 
@@ -12,19 +18,8 @@ class LoginForm extends StatefulWidget {
   _LoginFormState createState() => _LoginFormState();
 }
 
-extension ColorExtension on String {
-  toColor() {
-    var hexColor = this.replaceAll("#", "");
-    if (hexColor.length == 6) {
-      hexColor = "FF" + hexColor;
-    }
-    if (hexColor.length == 8) {
-      return Color(int.parse("0x$hexColor"));
-    }
-  }
-}
-
 class _LoginFormState extends State<LoginForm> {
+  final UserAuthRepository _auth = UserAuthRepository();
   // inicializar instacia de login bloc
   late LoginBloc _loginBloc;
 
@@ -32,6 +27,8 @@ class _LoginFormState extends State<LoginForm> {
   // al presionar los botones de login
 
   bool _showLoading = false;
+  String email = '';
+  String pwd = '';
 
   @override
   void dispose() {
@@ -67,18 +64,7 @@ class _LoginFormState extends State<LoginForm> {
       children: [
         // stack background image
         Container(
-          color: Colors.green,
-          // color: '#a3b18a'.toColor(),
-          // decoration: BoxDecoration(
-          //   gradient: LinearGradient(
-          //     begin: Alignment.topCenter,
-          //     end: Alignment.bottomCenter,
-          //     colors: [
-          //       Color(0xff0884cc),
-          //       Color(0xff04476e),
-          //     ],
-          //   ),
-          // ),
+          color: '#cce3de'.toColor(),
         ),
         // form content
         // agregar bloc login provider
@@ -112,21 +98,145 @@ class _LoginFormState extends State<LoginForm> {
               }
             },
             builder: (context, state) {
+              print('STATE::: $state');
               if (state is LoginSuccessState) {
+                print('STATE::: $state');
                 return HomePage();
               }
               // si no es success, se muestra el form
-              return SingleChildScrollView(
-                child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 60, horizontal: 24),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                    color: Color(0xa0FFffff),
-                  ),
-                  child: FormBody(
-                    onFacebookLoginTap: _facebookLogIn,
-                    onGoogleLoginTap: _googleLogIn,
-                    onAnonymousLoginTap: _anonymousLogIn,
+              return Scaffold(
+                resizeToAvoidBottomInset: false,
+                backgroundColor: '#cce3de'.toColor(),
+                body: Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  'Ingresa a tu cuenta',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.grey[700],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 40),
+                              child: Container(
+                                padding: EdgeInsets.only(top: 30, left: 3),
+                                child: Column(
+                                  children: <Widget>[
+                                    // Form(
+                                    //   autovalidateMode:
+                                    //       AutovalidateMode.onUserInteraction,
+                                    //   child: ListView(
+                                    //     scrollDirection: Axis.vertical,
+                                    //     shrinkWrap: true,
+                                    //     padding: EdgeInsets.all(24),
+                                    //     children: [
+                                    //       TextFormField(
+                                    //         decoration: InputDecoration(
+                                    //           label: Text('Correo'),
+                                    //           border: OutlineInputBorder(
+                                    //             borderRadius:
+                                    //                 BorderRadius.circular(15),
+                                    //           ),
+                                    //           filled: true,
+                                    //         ),
+                                    //         validator: (value) {
+                                    //           if (value == null ||
+                                    //               value.isEmpty) {
+                                    //             return 'Ingresa el correo';
+                                    //           } else {
+                                    //             email = value;
+                                    //           }
+                                    //           return null;
+                                    //         },
+                                    //       ),
+                                    //       SizedBox(height: 24),
+                                    //       TextFormField(
+                                    //         obscureText: true,
+                                    //         enableSuggestions: false,
+                                    //         autocorrect: false,
+                                    //         decoration: InputDecoration(
+                                    //           label: Text('Contraseña'),
+                                    //           border: OutlineInputBorder(
+                                    //             borderRadius:
+                                    //                 BorderRadius.circular(15),
+                                    //           ),
+                                    //           filled: true,
+                                    //         ),
+                                    //         validator: (value) {
+                                    //           if (value == null ||
+                                    //               value.isEmpty) {
+                                    //             return 'Ingresa la contraseña';
+                                    //           } else {
+                                    //             pwd = value;
+                                    //           }
+                                    //           return null;
+                                    //         },
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
+                                    // MaterialButton(
+                                    //   onPressed: () async {
+                                    //     dynamic res =
+                                    //         await _auth.anonymousSignIn();
+                                    //     if (res.emailVerified == null) {
+                                    //       print('Error');
+                                    //     } else {
+                                    //       print('res: ${res.emailVerified}');
+                                    //       print('User signed in');
+                                    //     }
+                                    //   },
+                                    //   minWidth: double.infinity,
+                                    //   height: 60,
+                                    //   color: '#6b9080'.toColor(),
+                                    //   elevation: 0,
+                                    //   shape: RoundedRectangleBorder(
+                                    //     // side: BorderSide(color: Colors.black),
+                                    //     borderRadius: BorderRadius.circular(50),
+                                    //   ),
+                                    //   child: Text(
+                                    //     'Ingresar',
+                                    //     style: TextStyle(
+                                    //       fontWeight: FontWeight.bold,
+                                    //       fontSize: 18,
+                                    //       color: Colors.white,
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                    FormBody(
+                                      onGoogleLoginTap: _googleLogIn,
+                                      onAnonymousLoginTap: _anonymousLogIn,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               );

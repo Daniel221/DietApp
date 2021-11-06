@@ -19,170 +19,50 @@ class FormBody extends StatelessWidget {
   // cambiar a un solo value changed que reciba enum de login
   final ValueChanged<bool> onAnonymousLoginTap;
   final ValueChanged<bool> onGoogleLoginTap;
-  final ValueChanged<bool> onFacebookLoginTap;
+  String email = '';
+  String pwd = '';
+  // final ValueChanged<bool> onFacebookLoginTap;
 
   FormBody({
     Key? key,
     required this.onAnonymousLoginTap,
     required this.onGoogleLoginTap,
-    required this.onFacebookLoginTap,
+    // required this.onFacebookLoginTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // logo
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'LOGO',
-                style: TextStyle(fontSize: 40),
-              ),
-            ],
-          ),
-          color: '#dde7c7'.toColor(),
-          height: 128,
-          width: 128,
-        ),
-        SizedBox(height: 20),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 32),
-          child: Text(
-            "BIENVENIDO",
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              shadows: [
-                Shadow(
-                  color: Colors.black.withOpacity(0.5),
-                  offset: Offset(1, 2),
-                  blurRadius: 1.0,
-                ),
-              ],
-            ),
-          ),
-        ),
         SizedBox(height: 24),
-        Row(
-          children: [
-            Expanded(
-              child: Divider(
-                color: Colors.black,
-                endIndent: 0,
-                indent: 8,
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 32),
-              child: Text(
-                "Acceso con correo.",
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Divider(
-                color: Colors.black,
-                endIndent: 8,
-                indent: 0,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Container(
-                height: 40,
-                margin: EdgeInsets.symmetric(horizontal: 32),
-                child: MaterialButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                  ),
-                  onPressed: () => onAnonymousLoginTap(true),
-                  color: Colors.black,
-                  child: Row(
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.mask,
-                        color: Colors.grey[200],
-                      ),
-                      SizedBox(width: 14),
-                      Expanded(
-                        child: Text(
-                          "Utilizar correo",
-                          style: TextStyle(
-                            color: Colors.grey[200],
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 24),
-        Row(
-          children: [
-            Expanded(
-              child: Divider(
-                color: Colors.black,
-                endIndent: 0,
-                indent: 8,
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 32),
-              child: Text(
-                "Acceso rapido.",
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Divider(
-                color: Colors.black,
-                endIndent: 8,
-                indent: 0,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 24),
-        // login buttons
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 32),
+          margin: EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: [
-              Expanded(
-                child: FacebookAuthButton(
-                  onPressed: () => onFacebookLoginTap(true),
-                  text: "Iniciar con Facebook",
-                  style: AuthButtonStyle(borderRadius: 18),
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        SizedBox(height: 14),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 32),
-          child: Row(
-            children: [
+              // Form(
+              //   autovalidateMode: AutovalidateMode.onUserInteraction,
+              //   child: ListView(
+              //     scrollDirection: Axis.vertical,
+              //     shrinkWrap: true,
+              //     padding: EdgeInsets.all(24),
+              //     children: [
+              //       TextFormField(
+              //         decoration: InputDecoration(
+              //           label: Text('Correo'),
+              //           border: OutlineInputBorder(),
+              //         ),
+              //         validator: (value) {
+              //           if (value == null || value.isEmpty) {
+              //             return 'Ingresa el correo';
+              //           } else {
+              //             email = value;
+              //           }
+              //           return null;
+              //         },
+              //       )
+              //     ],
+              //   ),
+              // ),
               Expanded(
                 child: GoogleAuthButton(
                   onPressed: () => onGoogleLoginTap(true),
@@ -192,16 +72,6 @@ class FormBody extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ),
-        SizedBox(height: 24),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 32),
-          child: Text(
-            "Al acceder se aceptan los terminos y condiciones asi como la politica de privacidad, "
-            "mismos que pueden ser consultados en mipaginaweb.com.mx o en los ajustes de la aplicacion.",
-            textAlign: TextAlign.justify,
-            style: TextStyle(fontSize: 10),
           ),
         ),
         SizedBox(height: 24),

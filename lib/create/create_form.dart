@@ -13,34 +13,35 @@ class CreateForm extends StatefulWidget {
   _CreateFormState createState() => _CreateFormState();
 }
 
+extension ColorExtension on String {
+  toColor() {
+    var hexColor = this.replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF" + hexColor;
+    }
+    if (hexColor.length == 8) {
+      return Color(int.parse("0x$hexColor"));
+    }
+  }
+}
+
 class _CreateFormState extends State<CreateForm> {
   var _formKey = GlobalKey<FormState>();
   late CreateBloc _createBloc;
   String name = '';
+  String lastName = '';
   String email = '';
-  File? _img;
-
-  // image picker
-  Future<File?> _getImage() async {
-    final pickedImage = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-      // limitar ancho y alto
-      maxHeight: 720,
-      maxWidth: 720,
-      imageQuality: 85,
-    );
-    if (pickedImage != null) {
-      return File(pickedImage.path);
-    } else {
-      return null;
-    }
-  }
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFcce3de),
       appBar: AppBar(
-        title: Text('Nuevo usuario'),
+        title: Text('Crear nuevo usuario'),
+        // backgroundColor: Color(0xFFcce3de),
+        backgroundColor: Color(0xFF6b9080),
+        // backgroundColor: Colors.red,
       ),
       body: BlocProvider(
         create: (context) {
@@ -57,85 +58,117 @@ class _CreateFormState extends State<CreateForm> {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _formKey,
             child: ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
               padding: EdgeInsets.all(24),
               children: [
-                Container(
-                  child: Stack(
-                    // para alinear al centro los elementos del stack
-                    alignment: Alignment.topCenter,
-                    children: [
-                      CircleAvatar(
-                        maxRadius: 84,
-                        child: _img != null ? Image.file(_img!) : Container(),
-                        backgroundColor: Colors.blue[200],
-                      ),
-                      // para acomodar el ícono de la cámara
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        // recorrer la pantalla 1 / 4 hacia la derecha
-                        left: MediaQuery.of(context).size.width / 4,
-                        child: CircleAvatar(
-                          maxRadius: 24,
-                          backgroundColor: Colors.grey[200],
-                          child: IconButton(
-                            tooltip: 'Tomar foto',
-                            color: Colors.black87,
-                            icon: Icon(FontAwesomeIcons.cameraRetro),
-                            onPressed: () async {
-                              _img = await _getImage();
-                              setState(() {});
-                            },
-                          ),
-                        ),
-                      )
-                    ],
+                Text(
+                  'Ingresa tus datos',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[700],
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(
+                  height: 20,
+                ),
                 TextFormField(
                   decoration: InputDecoration(
                     label: Text('Nombre'),
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    filled: true,
                   ),
-                  // The validator receives the text that the user has entered.
-                  // value = texto actual dentro del text field
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Ingresa el nombre';
+                      return 'Ingresa tu nombre';
                     } else {
-                      name = value;
+                      email = value;
                     }
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 24),
                 TextFormField(
                   decoration: InputDecoration(
-                    label: Text('Email'),
-                    border: OutlineInputBorder(),
+                    label: Text('Apellido'),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    filled: true,
                   ),
-                  // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Ingresa el correo';
+                      return 'Ingresa tu apellido';
                     } else {
-                      name = value;
+                      lastName = value;
                     }
                     return null;
                   },
                 ),
-                ElevatedButton(
+                SizedBox(height: 24),
+                TextFormField(
+                  decoration: InputDecoration(
+                    label: Text('Correo'),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    filled: true,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Ingresa tu correo';
+                    } else {
+                      email = value;
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 24),
+                TextFormField(
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                    label: Text('Contraseña'),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    filled: true,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Ingresa la contraseña';
+                    } else {
+                      password = value;
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 24),
+                Container(
+                  height: MediaQuery.of(context).size.height / 4,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/create.png'),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 24),
+                MaterialButton(
                   onPressed: () {
                     // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {
                       // evento que tenemos en el bloc
                       _createBloc.add(
                         SaveAllOnlineEvent(
-                          img: _img,
                           userData: {
                             'email': email,
                             'name': name,
+                            'lastName': lastName,
+                            'password': password,
                           },
                         ),
                       );
@@ -150,7 +183,22 @@ class _CreateFormState extends State<CreateForm> {
                       FocusScope.of(context).unfocus();
                     }
                   },
-                  child: const Text('Submit'),
+                  minWidth: double.infinity,
+                  height: 60,
+                  color: '#6b9080'.toColor(),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    // side: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: Text(
+                    'Crear cuenta',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ],
             ),

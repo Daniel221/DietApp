@@ -1,8 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 // métodos disponibles para auth
 class UserAuthRepository {
+  // final Widget? email;
+  // final Widget? password;
+  // UserAuthRepository({
+  //   @required this.email,
+  //   @required this.password,
+  // });
   // para iniciar sesión en google
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   // para la auth con firebase
@@ -24,13 +31,30 @@ class UserAuthRepository {
   }
 
   // para usuarios que no quieren usar google
-  Future<void> anonymousSignIn() async {
-    final anonymousUser = (await _auth.signInAnonymously()).user;
+  Future anonymousSignIn() async {
+    // try {
+    //   var user =
+    //       _auth.signInWithEmailAndPassword(email: email, password: password);
+    //   if (user != null) {
+    //     return user;
+    //   } else {
+    //     return null;
+    //   }
+    // } catch (e) {
+    //   return e;
+    // }
+    try {
+      final anonymousUser = (await _auth.signInAnonymously()).user;
+      print(anonymousUser);
+    } catch (e) {
+      return e;
+    }
     // user trae nombre de usuario, foto, id...
-    await anonymousUser!.updateDisplayName(
-      '${anonymousUser.uid.substring(0, 5)}_invitado',
-    );
-    await anonymousUser.reload();
+    // await anonymousUser!.updateDisplayName(
+    //   '${anonymousUser.uid.substring(0, 5)}_invitado',
+    // );
+    // await anonymousUser.reload();
+    // return anonymousUser;
   }
 
   Future<void> signInWithGoogle() async {

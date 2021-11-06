@@ -9,11 +9,11 @@ abstract class CreateEvent extends Equatable {
 
 class SaveAllOnlineEvent extends CreateEvent {
   // info a pasarle
-  final File? img;
+  // final File? img;
   final Map<String, dynamic> userData;
 
   // los hacemos requeridos
-  SaveAllOnlineEvent({required this.img, required this.userData});
+  SaveAllOnlineEvent({required this.userData});
 
   @override
   // compara estados
