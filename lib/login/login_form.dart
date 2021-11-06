@@ -1,12 +1,8 @@
 import 'package:diet_app/auth/user_auth_repository.dart';
 import 'package:diet_app/home/home_page.dart';
-import 'package:diet_app/login/login_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:diet_app/home/home_page.dart';
 
 import 'bloc/login_bloc.dart';
 import 'form_body.dart';
@@ -46,9 +42,8 @@ class _LoginFormState extends State<LoginForm> {
     // invocar al login de firebase con el bloc
     // recodar configurar pantallad Oauth en google Cloud
     print("google");
-    // agregar evento al login bloc de google
-    _loginBloc.add(
-        LoginWithGoogleEvent()); // hasta ahorita sólo está implementado el sign in con google
+    // agregar evento al login bloc
+    _loginBloc.add(LoginWithGoogleEvent());
   }
 
   void _facebookLogIn(bool _) {
@@ -75,7 +70,7 @@ class _LoginFormState extends State<LoginForm> {
             child: BlocProvider(
           create: (context) {
             _loginBloc = LoginBloc();
-            return LoginBloc();
+            return _loginBloc;
           },
           // snippet: blocc
           child: BlocConsumer<LoginBloc, LoginState>(
