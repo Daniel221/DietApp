@@ -38,7 +38,7 @@ class _CreateFormState extends State<CreateForm> {
     return Scaffold(
       backgroundColor: Color(0xFFcce3de),
       appBar: AppBar(
-        title: Text('Crear nuevo usuario'),
+        title: Text('Ingresar información'),
         // backgroundColor: Color(0xFFcce3de),
         backgroundColor: Color(0xFF6b9080),
         // backgroundColor: Colors.red,
@@ -192,7 +192,7 @@ class _CreateFormState extends State<CreateForm> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: Text(
-                    'Crear cuenta',
+                    'Guardar',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,

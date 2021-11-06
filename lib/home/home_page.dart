@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(FontAwesomeIcons.boxOpen),
+        child: Icon(FontAwesomeIcons.user),
         onPressed: () {
           // cuando de click, nos manda a otra página (nav. entre páginas)
           Navigator.of(context).push(

@@ -93,9 +93,7 @@ class _LoginFormState extends State<LoginForm> {
               }
             },
             builder: (context, state) {
-              print('STATE::: $state');
               if (state is LoginSuccessState) {
-                print('STATE::: $state');
                 return HomePage();
               }
               // si no es success, se muestra el form
