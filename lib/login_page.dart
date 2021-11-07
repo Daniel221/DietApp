@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:diet_app/create_account.dart';
+import 'package:diet_app/home_navigation.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -63,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildLoginHeading() {
-    return Container(
+    return SizedBox(
       // color: Colors.red,
       width: 150,
       height: 65,
@@ -118,6 +119,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     style: ElevatedButton.styleFrom(primary: Colors.green[300]),
                     onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => HomeNavigation(),
+                        ),
+                      );
                       print('login');
                     },
                   ),

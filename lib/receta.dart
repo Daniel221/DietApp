@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 class Receta extends StatefulWidget {
-  Receta({Key? key}) : super(key: key);
+  const Receta({Key? key}) : super(key: key);
 
   @override
   _RecetaState createState() => _RecetaState();
@@ -14,15 +14,15 @@ class _RecetaState extends State<Receta> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
         elevation: 0.0,
         actions: [
           IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.settings,
-                color: Color(0xFFABABAB),
-              ))
+            onPressed: () {},
+            icon: Icon(
+              Icons.settings,
+              color: Color(0xFFABABAB),
+            ),
+          ),
         ],
       ),
       body: SingleChildScrollView(
