@@ -14,9 +14,8 @@ class _RecipeSearchState extends State<RecipeSearch> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 40),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      margin: EdgeInsets.fromLTRB(10, 25, 0, 0),
+      child: ListView(
         children: [
           Center(
             child: Row(
@@ -26,31 +25,37 @@ class _RecipeSearchState extends State<RecipeSearch> {
                   child: TextFormField(
                     controller: searchController,
                     decoration: InputDecoration(
-                      hintText: "busca tus recetas aquí!",
-                    ),
+                        hintText: "busca tus recetas aquí!",
+                        suffixIcon: IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.search),
+                        )),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.search),
-                ),
+                Text("filtros")
               ],
             ),
           ),
-          // ConstrainedBox(
-          //   constraints: BoxConstraints(maxWidth: 400),
-          //   child: GridView.builder(
-          //       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          //           maxCrossAxisExtent: 200,
-          //           childAspectRatio: 3 / 2,
-          //           crossAxisSpacing: 20,
-          //           mainAxisSpacing: 20),
-          //       itemCount: CardController.testList.length,
-          //       itemBuilder: (context, index) {
-          //         return CardController.createCard(
-          //             CardController.testList[index], "");
-          //       }),
-          // ),
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 260),
+            child: Center(
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: ScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                itemCount: CardController.testList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
+                    height: 240,
+                    width: 260,
+                    child: CardController.createCard(
+                        CardController.testList[index], ""),
+                  );
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );

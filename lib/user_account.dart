@@ -5,6 +5,9 @@ class UserAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(margin: EdgeInsets.only(top: 200), child: Text("user"));
+    return Container(
+      margin: EdgeInsets.only(top: 200),
+      child: Text("user"),
+    );
   }
 }
