@@ -2,7 +2,9 @@
 
 import 'package:diet_app/create_account.dart';
 import 'package:diet_app/home_navigation.dart';
+import 'package:diet_app/providers/recipes_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -121,7 +123,10 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => HomeNavigation(),
+                          builder: (context) => ChangeNotifierProvider(
+                              create: (context) =>
+                                  RecipesProvider()..getAllRecipes(),
+                              child: HomeNavigation()),
                         ),
                       );
                       print('login');

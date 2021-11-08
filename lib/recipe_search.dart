@@ -1,5 +1,7 @@
 import 'package:diet_app/card_controller.dart';
+import 'package:diet_app/providers/recipes_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RecipeSearch extends StatefulWidget {
   RecipeSearch({Key? key}) : super(key: key);
@@ -38,23 +40,25 @@ class _RecipeSearchState extends State<RecipeSearch> {
           ),
           ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 260),
-            child: Center(
-              child: ListView.builder(
+            child:
+                Consumer<RecipesProvider>(builder: (context, recProvider, _) {
+              return ListView.builder(
                 shrinkWrap: true,
                 physics: ScrollPhysics(),
                 scrollDirection: Axis.vertical,
-                itemCount: CardController.testList.length,
+                itemCount: recProvider.getRecipes?.hits?.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                     margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
                     height: 240,
                     width: 260,
                     child: CardController.createCard(
-                        CardController.testList[index], ""),
+                        recProvider.getRecipes?.hits?[index].recipe?.label,
+                        recProvider.getRecipes?.hits?[index].recipe?.image),
                   );
                 },
-              ),
-            ),
+              );
+            }),
           ),
         ],
       ),
