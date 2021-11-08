@@ -123,12 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) =>
-                              ChangeNotifierProvider<RecipesProvider>(
-                                  create: (context) =>
-                                      RecipesProvider()..getAllRecipes(),
-                                  child: HomeNavigation()),
-                        ),
+                            builder: (context) => HomeNavigation()),
                       );
                       print('login');
                     },
