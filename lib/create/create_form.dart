@@ -132,7 +132,7 @@ class _CreateFormState extends State<CreateForm> {
                   enableSuggestions: false,
                   autocorrect: false,
                   decoration: InputDecoration(
-                    label: Text('Contraseña'),
+                    label: Text('Estatura'),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -140,7 +140,7 @@ class _CreateFormState extends State<CreateForm> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Ingresa la contraseña';
+                      return 'Ingresa tu estatura';
                     } else {
                       password = value;
                     }
