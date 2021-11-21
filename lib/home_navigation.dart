@@ -25,10 +25,7 @@ class _HomeNavigationState extends State<HomeNavigation> {
         onPageChanged: (value) => setState(() => _currentIndex = value),
         children: [
           HomePage(),
-          ChangeNotifierProvider(
-            create: (context) => RecipesProvider()..getAllRecipes(),
-            child: RecipeSearch(),
-          ),
+          RecipeSearch(),
           Favorites(),
           UserAccount(),
         ],

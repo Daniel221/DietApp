@@ -1,7 +1,10 @@
 import 'package:diet_app/card_controller.dart';
 import 'package:diet_app/providers/recipes_provider.dart';
+import 'package:diet_app/recipes/bloc/recipes_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_shimmer/flutter_shimmer.dart';
 
 class RecipeSearch extends StatefulWidget {
   RecipeSearch({Key? key}) : super(key: key);
@@ -40,23 +43,32 @@ class _RecipeSearchState extends State<RecipeSearch> {
           ),
           ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 260),
-            child:
-                Consumer<RecipesProvider>(builder: (context, recProvider, _) {
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: ScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                itemCount: recProvider.getRecipes?.hits?.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
-                    height: 240,
-                    width: 260,
-                    child: CardController.createCard(
-                        recProvider.getRecipes?.hits?[index].recipe?.label,
-                        recProvider.getRecipes?.hits?[index].recipe?.image),
-                  );
-                },
+            child: BlocBuilder<RecipesBloc, RecipesState>(
+                builder: (context, state) {
+              if (state is RecipesLoadingState) {
+                return _searchingView();
+              } else if (state is SearchErrorState) {
+                return _error(state.errorMsg);
+              } else if (state is ContentAvailableState) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  itemCount: state.totalHits,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
+                      height: 240,
+                      width: 260,
+                      child: CardController.createCard(
+                          state.recipesList[index].recipe?.label,
+                          state.recipesList[index].recipe?.image),
+                    );
+                  },
+                );
+              }
+              return Center(
+                child: Text("Recetas"),
               );
             }),
           ),
@@ -64,4 +76,17 @@ class _RecipeSearchState extends State<RecipeSearch> {
       ),
     );
   }
+}
+
+Widget _searchingView() {
+  return ListView.builder(
+    itemCount: 15,
+    itemBuilder: (BuildContext context, int index) {
+      return ListTileShimmer();
+    },
+  );
+}
+
+Widget _error(String msg) {
+  return Center(child: Text("$msg"));
 }
