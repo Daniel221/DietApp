@@ -31,3 +31,11 @@ class ContentAvailableState extends RecipesState {
   @override
   List<Object> get props => [recipesList, totalHits];
 }
+
+class SearchRecipesState extends RecipesState {
+  final String searchTerm;
+
+  SearchRecipesState({required this.searchTerm});
+  @override
+  List<Object> get props => [searchTerm];
+}

@@ -30,9 +30,15 @@ class _RecipeSearchState extends State<RecipeSearch> {
                   child: TextFormField(
                     controller: searchController,
                     decoration: InputDecoration(
-                        hintText: "busca tus recetas aquí!",
+                        hintText: "orange",
                         suffixIcon: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            BlocProvider.of<RecipesBloc>(context).add(
+                              SearchRecipeEvent(
+                                queryText: searchController.text,
+                              ),
+                            );
+                          },
                           icon: Icon(Icons.search),
                         )),
                   ),

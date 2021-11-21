@@ -21,7 +21,22 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
         var recipes = await _recipesRepository.getRecipes();
         emitState(ContentAvailableState(
           recipesList: recipes.hits ?? [],
-          totalHits: (((recipes.from ?? 0) - 1) + (recipes.to ?? 0)) ?? 0,
+          totalHits: (((recipes.from ?? 0) - 1) + (recipes.to ?? 0)),
+        ));
+      } catch (e) {
+        emitState(SearchErrorState(
+          errorMsg: e.toString(),
+        ));
+      }
+    });
+
+    on<SearchRecipeEvent>((event, emitState) async {
+      try {
+        emitState(RecipesLoadingState());
+        var recipes = await _recipesRepository.searchRecipes(event.queryText);
+        emitState(ContentAvailableState(
+          recipesList: recipes.hits ?? [],
+          totalHits: (((recipes.from ?? 0) - 1) + (recipes.to ?? 0)),
         ));
       } catch (e) {
         emitState(SearchErrorState(
