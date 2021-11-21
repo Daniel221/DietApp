@@ -21,11 +21,11 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
         var recipes = await _recipesRepository.getRecipes();
         emitState(ContentAvailableState(
           recipesList: recipes.hits ?? [],
-          totalHits: recipes.count ?? 0,
+          totalHits: (((recipes.from ?? 0) - 1) + (recipes.to ?? 0)) ?? 0,
         ));
       } catch (e) {
         emitState(SearchErrorState(
-          errorMsg: "Error while fetching recipes",
+          errorMsg: e.toString(),
         ));
       }
     });

@@ -46,7 +46,15 @@ class _RecipeSearchState extends State<RecipeSearch> {
             child: BlocBuilder<RecipesBloc, RecipesState>(
                 builder: (context, state) {
               if (state is RecipesLoadingState) {
-                return _searchingView();
+                return Column(children: [
+                  SizedBox(
+                    height: 24,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [CircularProgressIndicator()],
+                  ),
+                ]);
               } else if (state is SearchErrorState) {
                 return _error(state.errorMsg);
               } else if (state is ContentAvailableState) {
@@ -76,15 +84,6 @@ class _RecipeSearchState extends State<RecipeSearch> {
       ),
     );
   }
-}
-
-Widget _searchingView() {
-  return ListView.builder(
-    itemCount: 15,
-    itemBuilder: (BuildContext context, int index) {
-      return ListTileShimmer();
-    },
-  );
 }
 
 Widget _error(String msg) {
