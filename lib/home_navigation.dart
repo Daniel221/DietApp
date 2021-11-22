@@ -1,8 +1,10 @@
 import 'package:diet_app/favorites.dart';
 import 'package:diet_app/home_page.dart';
+import 'package:diet_app/providers/recipes_provider.dart';
 import 'package:diet_app/recipe_search.dart';
 import 'package:diet_app/user_account.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeNavigation extends StatefulWidget {
   HomeNavigation({Key? key}) : super(key: key);
@@ -21,7 +23,12 @@ class _HomeNavigationState extends State<HomeNavigation> {
       body: PageView(
         controller: _pageController,
         onPageChanged: (value) => setState(() => _currentIndex = value),
-        children: [HomePage(), RecipeSearch(), Favorites(), UserAccount()],
+        children: [
+          HomePage(),
+          RecipeSearch(),
+          Favorites(),
+          UserAccount(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

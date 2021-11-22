@@ -1,3 +1,5 @@
+
+import 'package:diet_app/recipes/bloc/recipes_bloc.dart';
 import 'package:diet_app/auth/bloc/auth_bloc.dart';
 import 'package:diet_app/home_navigation.dart';
 import 'package:diet_app/splash_screen.dart';
@@ -13,11 +15,18 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   // auth bloc provider
-  runApp(BlocProvider(
-    create: (context) =>
-        AuthBloc()..add(VerifyAuthEvent()), // le agrega el evento
-    child: MyApp(), // todo myapp tiene acceso a la auth
-  ));
+  runApp(MultiBlocProvider(
+      providers: [
+        BlocProvider<RecipesBloc>(
+          create: (context) => RecipesBloc()..add(AllRecipesEvent()),
+        ),
+        BlocProvider<AuthBloc>(
+          create: (context) => AuthBloc()..add(VerifyAuthEvent()),
+        ),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

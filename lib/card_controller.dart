@@ -24,6 +24,11 @@ class CardController {
               fallbackHeight: 160,
               fallbackWidth: 150,
             ),
+            // Image.network(
+            //   img,
+            //   height: 160,
+            //   width: 150,
+            // ),
             Container(
               padding: const EdgeInsets.all(8.0),
               height: 68,
