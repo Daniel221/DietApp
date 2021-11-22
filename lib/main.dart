@@ -1,4 +1,5 @@
 import 'package:diet_app/auth/bloc/auth_bloc.dart';
+import 'package:diet_app/home_navigation.dart';
 import 'package:diet_app/splash_screen.dart';
 import 'package:diet_app/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         builder: (context, state) {
           if (state is AlreadyAuthState) {
             // si ya está auth, vamos a homepage
-            return HomePage();
+            return HomeNavigation();
           } else if (state is UnAuthState) {
             // si no, a welcome page -> de aquí a login o create
             return WelcomePage();

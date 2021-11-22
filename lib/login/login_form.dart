@@ -1,5 +1,5 @@
 import 'package:diet_app/auth/user_auth_repository.dart';
-import 'package:diet_app/home/home_page.dart';
+import 'package:diet_app/home_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -94,7 +94,7 @@ class _LoginFormState extends State<LoginForm> {
             },
             builder: (context, state) {
               if (state is LoginSuccessState) {
-                return HomePage();
+                return HomeNavigation();
               }
               // si no es success, se muestra el form
               return Scaffold(
