@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:diet_app/auth/bloc/auth_bloc.dart';
 import 'package:diet_app/create/bloc/create_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,16 +30,43 @@ class _CreateFormState extends State<CreateForm> {
   var _formKey = GlobalKey<FormState>();
   late CreateBloc _createBloc;
   String name = '';
-  String lastName = '';
-  String email = '';
-  String password = '';
+  double peso = 0.0;
+  double estatura = 0.0;
+  double porcentaje = 0.0;
+  File? _img;
+
+  // image picker
+  Future<File?> _getImage() async {
+    final pickedImage = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      // limitar ancho y alto
+      maxHeight: 720,
+      maxWidth: 720,
+      imageQuality: 85,
+    );
+    if (pickedImage != null) {
+      return File(pickedImage.path);
+    } else {
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFcce3de),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('Ingresar información'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // agregar evento a bloc auth para desautenticar
+              BlocProvider.of<AuthBloc>(context).add(SignOutAuthEvent());
+            },
+            icon: Icon(FontAwesomeIcons.signOutAlt),
+          ),
+        ],
         // backgroundColor: Color(0xFFcce3de),
         backgroundColor: Color(0xFF6b9080),
         // backgroundColor: Colors.red,
@@ -51,8 +79,11 @@ class _CreateFormState extends State<CreateForm> {
         child: BlocListener<CreateBloc, CreateState>(
           listener: (context, state) {
             // si se creó,
-            if (state is CreatedUserState) Navigator.of(context).pop();
-            // TODO hacer los demás estados posibles
+            if (state is CreatedUserState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Información guardada')),
+              );
+            }
           },
           child: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -62,12 +93,36 @@ class _CreateFormState extends State<CreateForm> {
               shrinkWrap: true,
               padding: EdgeInsets.all(24),
               children: [
-                Text(
-                  'Ingresa tus datos',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey[700],
+                Container(
+                  child: Stack(
+                    // para alinear al centro los elementos del stack
+                    alignment: Alignment.topCenter,
+                    children: [
+                      CircleAvatar(
+                          maxRadius: 84,
+                          child: _img != null ? Image.file(_img!) : Container(),
+                          backgroundColor: Color(0xFF95d5b2)),
+                      // para acomodar el ícono de la cámara
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        // recorrer la pantalla 1 / 4 hacia la derecha
+                        left: MediaQuery.of(context).size.width / 4,
+                        child: CircleAvatar(
+                          maxRadius: 24,
+                          backgroundColor: Colors.grey[200],
+                          child: IconButton(
+                            tooltip: 'Tomar foto',
+                            color: Colors.black87,
+                            icon: Icon(FontAwesomeIcons.cameraRetro),
+                            onPressed: () async {
+                              _img = await _getImage();
+                              setState(() {});
+                            },
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -85,52 +140,14 @@ class _CreateFormState extends State<CreateForm> {
                     if (value == null || value.isEmpty) {
                       return 'Ingresa tu nombre';
                     } else {
-                      email = value;
+                      name = value;
                     }
                     return null;
                   },
                 ),
                 SizedBox(height: 24),
                 TextFormField(
-                  decoration: InputDecoration(
-                    label: Text('Apellido'),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    filled: true,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Ingresa tu apellido';
-                    } else {
-                      lastName = value;
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 24),
-                TextFormField(
-                  decoration: InputDecoration(
-                    label: Text('Correo'),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    filled: true,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Ingresa tu correo';
-                    } else {
-                      email = value;
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 24),
-                TextFormField(
-                  obscureText: true,
-                  enableSuggestions: false,
-                  autocorrect: false,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     label: Text('Estatura'),
                     border: OutlineInputBorder(
@@ -142,19 +159,48 @@ class _CreateFormState extends State<CreateForm> {
                     if (value == null || value.isEmpty) {
                       return 'Ingresa tu estatura';
                     } else {
-                      password = value;
+                      estatura = double.parse(value);
                     }
                     return null;
                   },
                 ),
                 SizedBox(height: 24),
-                Container(
-                  height: MediaQuery.of(context).size.height / 4,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/create.png'),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    label: Text('Peso'),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
+                    filled: true,
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Ingresa tu peso';
+                    } else {
+                      peso = double.parse(value);
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 24),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    label: Text('Porcentaje de grasa'),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    filled: true,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Ingresa tu porcentaje';
+                    } else {
+                      porcentaje = double.parse(value);
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(height: 24),
                 MaterialButton(
@@ -164,11 +210,12 @@ class _CreateFormState extends State<CreateForm> {
                       // evento que tenemos en el bloc
                       _createBloc.add(
                         SaveAllOnlineEvent(
+                          img: _img,
                           userData: {
-                            'email': email,
+                            'porcentaje': porcentaje,
                             'name': name,
-                            'lastName': lastName,
-                            'password': password,
+                            'peso': peso,
+                            'estatura': estatura,
                           },
                         ),
                       );

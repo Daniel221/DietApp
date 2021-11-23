@@ -1,3 +1,4 @@
+import 'package:diet_app/create/create_form.dart';
 import 'package:diet_app/favorites.dart';
 import 'package:diet_app/home_page.dart';
 import 'package:diet_app/providers/recipes_provider.dart';
@@ -27,7 +28,7 @@ class _HomeNavigationState extends State<HomeNavigation> {
           HomePage(),
           RecipeSearch(),
           Favorites(),
-          UserAccount(),
+          CreateForm(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
