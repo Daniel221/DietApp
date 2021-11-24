@@ -36,8 +36,7 @@ class _FavoritesState extends State<Favorites> {
                     margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
                     height: 240,
                     width: 260,
-                    child: CardController.createCard(
-                        CardController.testList[index], ""),
+                    //child: FoodCard(),
                   );
                 },
               ),
