@@ -42,8 +42,7 @@ class _HomePageState extends State<HomePage> {
                   margin: EdgeInsets.only(right: 30),
                   height: 240,
                   width: 160,
-                  child: CardController.createCard(
-                      CardController.testList[index], ""),
+                  //child: FoodCard(),
                 );
               },
             ),
@@ -69,8 +68,7 @@ class _HomePageState extends State<HomePage> {
                   margin: EdgeInsets.only(right: 30),
                   height: 240,
                   width: 160,
-                  child: CardController.createCard(
-                      CardController.testList[index], ""),
+                  //child: FoodCard(),
                 );
               },
             ),
@@ -96,8 +94,7 @@ class _HomePageState extends State<HomePage> {
                   margin: EdgeInsets.only(right: 30),
                   height: 240,
                   width: 160,
-                  child: CardController.createCard(
-                      CardController.testList[index], ""),
+                  //child: FoodCard(),
                 );
               },
             ),

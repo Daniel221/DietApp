@@ -74,9 +74,9 @@ class _RecipeSearchState extends State<RecipeSearch> {
                       margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
                       height: 240,
                       width: 260,
-                      child: CardController.createCard(
-                          state.recipesList[index].recipe?.label,
-                          state.recipesList[index].recipe?.image),
+                      child: FoodCard(
+                        recipe: state.recipesList[index].recipe,
+                      ),
                     );
                   },
                 );
