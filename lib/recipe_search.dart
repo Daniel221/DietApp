@@ -75,8 +75,9 @@ class _RecipeSearchState extends State<RecipeSearch> {
                       height: 240,
                       width: 260,
                       child: CardController.createCard(
-                          state.recipesList[index].recipe?.label,
-                          state.recipesList[index].recipe?.image),
+                        context,
+                        state.recipesList[index].recipe!,
+                      ),
                     );
                   },
                 );

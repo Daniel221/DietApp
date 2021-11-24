@@ -1,3 +1,7 @@
+import 'dart:js';
+
+import 'package:diet_app/models/recipe.dart';
+import 'package:diet_app/receta.dart';
 import 'package:flutter/material.dart';
 
 class CardController {
@@ -8,13 +12,14 @@ class CardController {
     "pizza hut"
   ];
 
-  static createCard(title, img) {
+  static createCard(BuildContext context, Recipe recipe) {
     return Card(
       elevation: 8,
       clipBehavior: Clip.antiAlias,
       child: new InkWell(
         onTap: () {
-          // Navigator.of(context).push()
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => Receta(recipeDetails: recipe)));
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -33,7 +38,7 @@ class CardController {
               padding: const EdgeInsets.all(8.0),
               height: 68,
               child: Text(
-                "$title",
+                "${recipe.label}",
                 overflow: TextOverflow.fade,
                 style: TextStyle(
                   fontSize: 18,
