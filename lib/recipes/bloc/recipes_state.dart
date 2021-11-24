@@ -35,7 +35,29 @@ class ContentAvailableState extends RecipesState {
 class SearchRecipesState extends RecipesState {
   final String searchTerm;
 
-  SearchRecipesState({required this.searchTerm});
+  SearchRecipesState({
+    required this.searchTerm,
+  });
   @override
   List<Object> get props => [searchTerm];
+}
+
+class RecipeDetailState extends RecipesState {
+  final String searchTerm;
+
+  RecipeDetailState({
+    required this.searchTerm,
+  });
+  @override
+  List<Object> get props => [searchTerm];
+}
+
+class RecipeAvailableState extends RecipesState {
+  final Recipe recipe;
+
+  RecipeAvailableState({
+    required this.recipe,
+  });
+  @override
+  List<Object> get props => [recipe];
 }

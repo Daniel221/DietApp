@@ -21,3 +21,11 @@ class AllRecipesEvent extends RecipesEvent {
   @override
   List<Object> get props => [];
 }
+
+class RecipeDetailEvent extends RecipesEvent {
+  final String recipeURI;
+
+  RecipeDetailEvent({required this.recipeURI});
+  @override
+  List<Object> get props => [];
+}
