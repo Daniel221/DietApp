@@ -44,35 +44,59 @@ class _RecetaState extends State<Receta> {
                   ),
                 ),
                 SizedBox(height: 10),
-                SizedBox(
-                  height: 142,
-                  width: 343,
-                  child: Placeholder(),
+                Text(
+                    "${widget.recipeDetails.dishType![0]} ${widget.recipeDetails.cuisineType![0]} ${widget.recipeDetails.mealType![0]}"),
+                SizedBox(height: 20),
+                Image.network(
+                  // "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg",
+                  widget.recipeDetails != Null
+                      ? widget.recipeDetails.image!
+                      : "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg",
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    );
+                  },
+                  // height: 160,
+                  // width: 150,
                 ),
+                // SizedBox(
+                //   height: 142,
+                //   width: 343,
+                //   child: Placeholder(),
+                // ),
                 SizedBox(height: 20),
                 Text(
                   "Ingredients",
                   style: TextStyle(fontSize: 30),
                 ),
-                ListTile(
-                  leading: Text("1 Cup", style: TextStyle(fontSize: 15)),
-                  title: Text("Milt"),
-                ),
-                ListTile(
-                  leading: Text("1 Teaspoon", style: TextStyle(fontSize: 15)),
-                  title: Text("Sugar"),
-                ),
-                ListTile(
-                  leading: Text("1 Tablespoon", style: TextStyle(fontSize: 15)),
-                  title: Text("Cinnamon"),
+                SizedBox(height: 20),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: widget.recipeDetails.ingredientLines!.length,
+                  itemBuilder: (BuildContext context, int index) => Text(
+                      "${widget.recipeDetails.ingredientLines![index]} \n"),
                 ),
                 SizedBox(height: 20),
                 Text(
-                  "Steps",
+                  "Labels",
                   style: TextStyle(fontSize: 30),
                 ),
-                Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt in diam in ultrices. Integer rhoncus ipsum eget efficitur sagittis. Sed ligula nunc, tincidunt mollis suscipit sit amet, semper ac ante. Cras nec lacinia odio, laoreet pharetra mi. In maximus dignissim metus vel tristique. In tincidunt nisl at ligula congue hendrerit. Donec dapibus tortor ut metus lobortis, id maximus lorem blandit. Proin et libero interdum, commodo tortor euismod, ullamcorper lorem. Phasellus sed nunc nisl. Mauris")
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: widget.recipeDetails.healthLabels!.length,
+                  itemBuilder: (BuildContext context, int index) =>
+                      Text("${widget.recipeDetails.healthLabels![index]}"),
+                ),
               ],
             ),
           ),
@@ -80,4 +104,8 @@ class _RecetaState extends State<Receta> {
       ),
     );
   }
+}
+
+Widget _ingredients(dynamic ing) {
+  return Text("${ing} \n");
 }
