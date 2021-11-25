@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:diet_app/models/recipe.dart';
 import 'package:diet_app/receta.dart';
 import 'package:flutter/material.dart';
