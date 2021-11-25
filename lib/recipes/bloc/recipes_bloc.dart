@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:diet_app/models/hit.dart';
+import 'package:diet_app/models/recipe.dart';
 import 'package:diet_app/models/recipes.dart';
 import 'package:diet_app/repositories/recipes_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -38,6 +39,18 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
           recipesList: recipes.hits ?? [],
           totalHits: (((recipes.from ?? 0) - 1) + (recipes.to ?? 0)),
         ));
+      } catch (e) {
+        emitState(SearchErrorState(
+          errorMsg: e.toString(),
+        ));
+      }
+    });
+
+    on<RecipeDetailEvent>((event, emitState) async {
+      try {
+        emitState(RecipesLoadingState());
+        var recipe = await _recipesRepository.getRecipe(event.recipeURI);
+        emitState(RecipeAvailableState(recipe: recipe));
       } catch (e) {
         emitState(SearchErrorState(
           errorMsg: e.toString(),

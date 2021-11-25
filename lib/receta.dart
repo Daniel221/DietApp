@@ -1,9 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:diet_app/models/recipe.dart';
 import 'package:flutter/material.dart';
 
 class Receta extends StatefulWidget {
-  const Receta({Key? key}) : super(key: key);
+  final Recipe recipeDetails;
+  const Receta({
+    Key? key,
+    required this.recipeDetails,
+  }) : super(key: key);
 
   @override
   _RecetaState createState() => _RecetaState();
@@ -32,7 +37,7 @@ class _RecetaState extends State<Receta> {
             child: Column(
               children: [
                 Text(
-                  "Recipe",
+                  widget.recipeDetails.label!,
                   style: TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.w600,

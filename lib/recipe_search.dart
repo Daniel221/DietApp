@@ -1,4 +1,4 @@
-import 'package:diet_app/food_card.dart';
+import 'package:diet_app/card_controller.dart';
 import 'package:diet_app/providers/recipes_provider.dart';
 import 'package:diet_app/recipes/bloc/recipes_bloc.dart';
 import 'package:flutter/material.dart';
@@ -74,8 +74,9 @@ class _RecipeSearchState extends State<RecipeSearch> {
                       margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
                       height: 240,
                       width: 260,
-                      child: FoodCard(
-                        recipe: state.recipesList[index].recipe,
+                      child: CardController.createCard(
+                        context,
+                        state.recipesList[index].recipe!,
                       ),
                     );
                   },

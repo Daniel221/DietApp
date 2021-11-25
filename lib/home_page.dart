@@ -1,8 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:diet_app/card_controller.dart';
+import 'package:diet_app/recipes/bloc/recipes_bloc.dart';
 import 'package:flutter/material.dart';
-
-import 'food_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -32,20 +33,43 @@ class _HomePageState extends State<HomePage> {
           Container(height: 25),
           ConstrainedBox(
             constraints: BoxConstraints(maxHeight: 250),
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: ScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: CardController.testList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: EdgeInsets.only(right: 30),
-                  height: 240,
-                  width: 160,
-                  //child: FoodCard(),
+            child: BlocBuilder<RecipesBloc, RecipesState>(
+                builder: (context, state) {
+              if (state is RecipesLoadingState) {
+                return Column(children: [
+                  SizedBox(
+                    height: 24,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [CircularProgressIndicator()],
+                  ),
+                ]);
+              } else if (state is SearchErrorState) {
+                return _error(state.errorMsg);
+              } else if (state is ContentAvailableState) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: state.totalHits,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
+                      height: 240,
+                      width: 260,
+                      child: CardController.createCard(
+                        context,
+                        state.recipesList[index].recipe!,
+                      ),
+                    );
+                  },
                 );
-              },
-            ),
+              }
+              return Center(
+                child: Text("Recetas"),
+              );
+            }),
           ),
           Container(height: 20),
           Text(
@@ -58,20 +82,43 @@ class _HomePageState extends State<HomePage> {
           Container(height: 25),
           ConstrainedBox(
             constraints: BoxConstraints(maxHeight: 250),
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: ScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: CardController.testList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: EdgeInsets.only(right: 30),
-                  height: 240,
-                  width: 160,
-                  child: FoodCard(),
+            child: BlocBuilder<RecipesBloc, RecipesState>(
+                builder: (context, state) {
+              if (state is RecipesLoadingState) {
+                return Column(children: [
+                  SizedBox(
+                    height: 24,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [CircularProgressIndicator()],
+                  ),
+                ]);
+              } else if (state is SearchErrorState) {
+                return _error(state.errorMsg);
+              } else if (state is ContentAvailableState) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: state.totalHits,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
+                      height: 240,
+                      width: 260,
+                      child: CardController.createCard(
+                        context,
+                        state.recipesList[index].recipe!,
+                      ),
+                    );
+                  },
                 );
-              },
-            ),
+              }
+              return Center(
+                child: Text("Recetas"),
+              );
+            }),
           ),
           Container(height: 20),
           Text(
@@ -84,23 +131,50 @@ class _HomePageState extends State<HomePage> {
           Container(height: 25),
           ConstrainedBox(
             constraints: BoxConstraints(maxHeight: 250),
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: ScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: CardController.testList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: EdgeInsets.only(right: 30),
-                  height: 240,
-                  width: 160,
-                  child: FoodCard(),
+            child: BlocBuilder<RecipesBloc, RecipesState>(
+                builder: (context, state) {
+              if (state is RecipesLoadingState) {
+                return Column(children: [
+                  SizedBox(
+                    height: 24,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [CircularProgressIndicator()],
+                  ),
+                ]);
+              } else if (state is SearchErrorState) {
+                return _error(state.errorMsg);
+              } else if (state is ContentAvailableState) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: state.totalHits,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
+                      height: 240,
+                      width: 260,
+                      child: CardController.createCard(
+                        context,
+                        state.recipesList[index].recipe!,
+                      ),
+                    );
+                  },
                 );
-              },
-            ),
+              }
+              return Center(
+                child: Text("Recetas"),
+              );
+            }),
           ),
         ],
       ),
     );
   }
+}
+
+Widget _error(String msg) {
+  return Center(child: Text("$msg"));
 }
