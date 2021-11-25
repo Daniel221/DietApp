@@ -1,5 +1,6 @@
 import 'package:diet_app/card_controller.dart';
-import 'package:diet_app/recipes/bloc/recipes_bloc.dart';
+import 'package:diet_app/favorites/bloc/favorites_bloc.dart';
+import 'package:diet_app/models/recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,12 +14,12 @@ class Favorites extends StatefulWidget {
 class _FavoritesState extends State<Favorites> {
   @override
   void initState() {
-    BlocProvider.of<RecipesBloc>(context).add(
-      SearchRecipeEvent(
-        queryText: "lemon",
-      ),
-    );
+    BlocProvider.of<FavoritesBloc>(context).add(GetAllFavoritesEvent());
     super.initState();
+  }
+
+  Recipe _convertToRecipe(Map<String, dynamic> recipe) {
+    return Recipe(label: recipe["label"]);
   }
 
   @override
@@ -36,9 +37,9 @@ class _FavoritesState extends State<Favorites> {
           Divider(),
           ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 260),
-            child: BlocBuilder<RecipesBloc, RecipesState>(
+            child: BlocBuilder<FavoritesBloc, FavoritesState>(
                 builder: (context, state) {
-              if (state is RecipesLoadingState) {
+              if (state is FavoritesLoadState) {
                 return Column(children: [
                   SizedBox(
                     height: 24,
@@ -48,22 +49,24 @@ class _FavoritesState extends State<Favorites> {
                     children: [CircularProgressIndicator()],
                   ),
                 ]);
-              } else if (state is SearchErrorState) {
+              } else if (state is FavoritesLoadErrorState) {
                 return _error(state.errorMsg);
-              } else if (state is ContentAvailableState) {
+              } else if (state is FavoritesLoadSuccessfulState) {
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
                   scrollDirection: Axis.vertical,
-                  itemCount: state.totalHits,
+                  itemCount: state.favoritesAmount,
                   itemBuilder: (BuildContext context, int index) {
+                    print(index);
+                    print(state.favoritesList.runtimeType);
                     return Container(
                       margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
                       height: 240,
                       width: 260,
                       child: CardController.createCard(
                         context,
-                        state.recipesList[index].recipe!,
+                        _convertToRecipe(state.favoritesList[index]),
                       ),
                     );
                   },

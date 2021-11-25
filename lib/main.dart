@@ -1,4 +1,3 @@
-
 import 'package:diet_app/recipes/bloc/recipes_bloc.dart';
 import 'package:diet_app/auth/bloc/auth_bloc.dart';
 import 'package:diet_app/home_navigation.dart';
@@ -8,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'favorites/bloc/favorites_bloc.dart';
 import 'home/home_page.dart';
 
 void main() async {
@@ -15,7 +15,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   // auth bloc provider
-  runApp(MultiBlocProvider(
+  runApp(
+    MultiBlocProvider(
       providers: [
         BlocProvider<RecipesBloc>(
           create: (context) => RecipesBloc()..add(AllRecipesEvent()),
@@ -23,6 +24,9 @@ void main() async {
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc()..add(VerifyAuthEvent()),
         ),
+        BlocProvider<FavoritesBloc>(
+          create: (context) => FavoritesBloc(),
+        )
       ],
       child: MyApp(),
     ),
