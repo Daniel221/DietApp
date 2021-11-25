@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'card_controller.dart';
+import 'food_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                   margin: EdgeInsets.only(right: 30),
                   height: 240,
                   width: 160,
-                  //child: FoodCard(),
+                  child: FoodCard(),
                 );
               },
             ),
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                   margin: EdgeInsets.only(right: 30),
                   height: 240,
                   width: 160,
-                  //child: FoodCard(),
+                  child: FoodCard(),
                 );
               },
             ),

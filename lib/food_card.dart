@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
-class FoodCard extends StatelessWidget {
+class FoodCard extends StatefulWidget {
   final recipe;
-  const FoodCard({
+  FoodCard({
     Key? key,
     @required this.recipe,
   }) : super(key: key);
 
+  @override
+  _FoodCardState createState() => _FoodCardState();
+}
+
+class _FoodCardState extends State<FoodCard> {
   test() {
-    print(recipe == Null);
+    print(widget.recipe == Null);
   }
 
   @override
@@ -25,37 +30,53 @@ class FoodCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Placeholder(
-            //   fallbackHeight: 160,
-            //   fallbackWidth: 150,
-            // ),
-            Image.network(
-              // "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg",
-              recipe != Null
-                  ? recipe.image
-                  : "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg",
-              loadingBuilder: (BuildContext context, Widget child,
-                  ImageChunkEvent? loadingProgress) {
-                if (loadingProgress == null) {
-                  return child;
-                }
-                return Center(
-                  child: CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                        : null,
-                  ),
-                );
-              },
+            Container(
               height: 160,
-              width: 150,
+              child: Stack(
+                children: [
+                  // Placeholder(
+                  //   fallbackHeight: 160,
+                  //   fallbackWidth: 150,
+                  // ),
+                  Image.network(
+                    // "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg",
+                    widget.recipe != Null
+                        ? widget.recipe.image
+                        : "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg",
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      );
+                    },
+                    height: 160,
+                    width: 150,
+                  ),
+                  FloatingActionButton(
+                    backgroundColor: Colors.transparent,
+                    onPressed: () {
+                      //TODO: favorites functionality
+                    },
+                    child: Icon(Icons.favorite),
+                  ),
+                ],
+              ),
             ),
             Container(
               padding: const EdgeInsets.all(8.0),
               height: 68,
               child: Text(
-                recipe != Null ? "${recipe.label}" : "ya es toda we",
+                widget.recipe != Null
+                    ? "${widget.recipe.label}"
+                    : "ya es toda we",
                 overflow: TextOverflow.fade,
                 style: TextStyle(
                   fontSize: 18,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'card_controller.dart';
+import 'food_card.dart';
 
 class Favorites extends StatefulWidget {
   Favorites({Key? key}) : super(key: key);
