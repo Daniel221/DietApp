@@ -1,4 +1,4 @@
-import 'package:diet_app/card_controller.dart';
+import 'package:diet_app/food_card.dart';
 import 'package:diet_app/providers/recipes_provider.dart';
 import 'package:diet_app/recipes/bloc/recipes_bloc.dart';
 import 'package:flutter/material.dart';
