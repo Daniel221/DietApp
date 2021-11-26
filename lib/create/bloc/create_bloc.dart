@@ -33,11 +33,11 @@ class CreateBloc extends Bloc<CreateEvent, CreateState> {
       //   if (_imageUrl.isNotEmpty) user['foto'] = _imageUrl;
       // }
       // para subir a firestore la info (name, email y foto)
-
+      String _imageUrl = '';
       // antes de postear, se necesita autenticar para sacar uid
       if (img != null) {
         // subir img al bucket
-        String _imageUrl = await _uploadFile(img);
+        _imageUrl = await _uploadFile(img);
         // actualizar la info con la url/link de la img
         if (_imageUrl.isNotEmpty) user['foto'] = _imageUrl;
       }
@@ -51,6 +51,7 @@ class CreateBloc extends Bloc<CreateEvent, CreateState> {
         "estatura": user["estatura"],
         "peso": user["peso"],
         "porcentaje": user["porcentaje"],
+        "img": _imageUrl
         // "password": user["password"],
       });
       // await FirebaseFirestore.instance.collection('users').add(user);

@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:diet_app/auth/bloc/auth_bloc.dart';
 import 'package:diet_app/create/bloc/create_bloc.dart';
+import 'package:diet_app/home_navigation.dart';
+import 'package:diet_app/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -80,6 +82,13 @@ class _CreateFormState extends State<CreateForm> {
           listener: (context, state) {
             // si se creó,
             if (state is CreatedUserState) {
+              // Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeNavigation(),
+                ),
+              );
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Información guardada')),
               );
