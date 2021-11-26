@@ -46,12 +46,15 @@ class _UserState extends State<User> {
                   } else if (state is SuccessUserInfoState) {
                     return Container(
                       child: ListView(
-                        scrollDirection: Axis.vertical,
+                        physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         children: <Widget>[
                           CircleAvatar(
                             radius: 150.0,
-                            backgroundImage: NetworkImage(state.info["img"]),
+                            backgroundImage: NetworkImage(state.info["img"] ==
+                                    ""
+                                ? "https://image.flaticon.com/icons/png/512/875/875503.png"
+                                : state.info["img"]),
                             backgroundColor: Colors.transparent,
                           ),
                           Card(
