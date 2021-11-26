@@ -22,8 +22,35 @@ class _HomePageState extends State<HomePage> {
       margin: EdgeInsets.only(left: 10),
       child: ListView(
         children: [
-          Placeholder(
-            fallbackHeight: 300,
+          Stack(
+            children: [
+              Container(
+                height: 250,
+                margin: EdgeInsets.only(right: 10),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          "https://www.consumidorglobal.com/uploads/s1/32/79/3/cocinandomelavida.jpeg"),
+                      fit: BoxFit.fill),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(20, 50, 150, 0),
+                padding: EdgeInsets.all(10),
+                color: Color(0xa8dbdbdb),
+                child: Center(
+                  child: Text(
+                    "Discover & try new recipes every day, with us",
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.green[300],
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           Container(height: 20),
           Text(
