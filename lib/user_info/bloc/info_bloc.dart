@@ -21,6 +21,10 @@ class InfoBloc extends Bloc<InfoEvent, InfoState> {
                 .toString()) // id del usuario autenticado
             .get()
           ..data();
+        // if (info["img"] == null || info["img"] == '') {
+        //   info["img"] =
+        //       "https://cdn-icons.flaticon.com/png/512/3177/premium/3177440.png?token=exp=1637899809~hmac=d7c2934cdc7c650c73567273722695b5";
+        // }
         emitState(SuccessUserInfoState(info: info));
       } catch (e) {
         emitState(FailedUserInfoState(

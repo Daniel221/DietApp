@@ -35,6 +35,7 @@ class _HomeNavigationState extends State<HomeNavigation> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
+        fixedColor: Color(0xFF6b9080),
         onTap: (value) {
           _pageController.animateToPage(
             value,
@@ -57,7 +58,9 @@ class _HomeNavigationState extends State<HomeNavigation> {
           ),
           BottomNavigationBarItem(
             label: 'User',
-            icon: Icon(Icons.person),
+            icon: Icon(
+              Icons.person,
+            ),
           ),
         ],
       ),

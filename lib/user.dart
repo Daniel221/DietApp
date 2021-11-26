@@ -1,5 +1,7 @@
+import 'package:diet_app/auth/bloc/auth_bloc.dart';
 import 'package:diet_app/create/create_form.dart';
 import 'package:diet_app/user_info/bloc/info_bloc.dart';
+import 'package:diet_app/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -42,9 +44,6 @@ class _UserState extends State<User> {
                   if (state is LoadingUserInfoState) {
                     return Text('Cargando...');
                   } else if (state is SuccessUserInfoState) {
-                    // return Text(
-                    //      Peso: ${state.info["peso"]} kg. state.info["porcentaje"]}%');
-
                     return Container(
                       child: ListView(
                         scrollDirection: Axis.vertical,
@@ -86,14 +85,36 @@ class _UserState extends State<User> {
               ),
             ),
           ),
-          FloatingActionButton(
-            child: Icon(FontAwesomeIcons.edit),
-            onPressed: () {
-              // cuando de click, nos manda a otra página (nav. entre páginas)
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => CreateForm()),
-              );
-            },
+          SizedBox(
+            height: 25,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              FloatingActionButton(
+                backgroundColor: Color(0xFF6b9080),
+                child: Icon(FontAwesomeIcons.edit),
+                onPressed: () {
+                  // cuando de click, nos manda a otra página (nav. entre páginas)
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => CreateForm()),
+                  );
+                },
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              FloatingActionButton(
+                backgroundColor: Color(0xFF6b9080),
+                child: Icon(FontAwesomeIcons.signOutAlt),
+                heroTag: 'logOut',
+                onPressed: () {
+                  BlocProvider.of<AuthBloc>(context).add(SignOutAuthEvent());
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => WelcomePage()));
+                },
+              ),
+            ],
           ),
         ],
       ),

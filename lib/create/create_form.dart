@@ -61,13 +61,14 @@ class _CreateFormState extends State<CreateForm> {
         automaticallyImplyLeading: false,
         title: Text('Ingresar información'),
         actions: [
-          IconButton(
-            onPressed: () {
-              // agregar evento a bloc auth para desautenticar
-              BlocProvider.of<AuthBloc>(context).add(SignOutAuthEvent());
-            },
-            icon: Icon(FontAwesomeIcons.signOutAlt),
-          ),
+          // IconButton(
+          //   onPressed: () {
+          //     // agregar evento a bloc auth para desautenticar
+          //     BlocProvider.of<AuthBloc>(context).add(SignOutAuthEvent());
+          //     print('bye');
+          //   },
+          //   icon: Icon(FontAwesomeIcons.signOutAlt),
+          // ),
         ],
         // backgroundColor: Color(0xFFcce3de),
         backgroundColor: Color(0xFF6b9080),
