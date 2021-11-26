@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:diet_app/breakfast/bloc/breakfast_recipes_bloc.dart';
 import 'package:diet_app/card_controller.dart';
+import 'package:diet_app/dinner/bloc/dinner_recipes_bloc.dart';
 import 'package:diet_app/recipes/bloc/recipes_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,9 +35,9 @@ class _HomePageState extends State<HomePage> {
           Container(height: 25),
           ConstrainedBox(
             constraints: BoxConstraints(maxHeight: 250),
-            child: BlocBuilder<RecipesBloc, RecipesState>(
+            child: BlocBuilder<BreakfastRecipesBloc, BreakfastRecipesState>(
                 builder: (context, state) {
-              if (state is RecipesLoadingState) {
+              if (state is BreakfastRecipesLoadingState) {
                 return Column(children: [
                   SizedBox(
                     height: 24,
@@ -45,9 +47,9 @@ class _HomePageState extends State<HomePage> {
                     children: [CircularProgressIndicator()],
                   ),
                 ]);
-              } else if (state is SearchErrorState) {
+              } else if (state is BreakfastSearchErrorState) {
                 return _error(state.errorMsg);
-              } else if (state is ContentAvailableState) {
+              } else if (state is BreakfastContentAvailableState) {
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
@@ -82,9 +84,9 @@ class _HomePageState extends State<HomePage> {
           Container(height: 25),
           ConstrainedBox(
             constraints: BoxConstraints(maxHeight: 250),
-            child: BlocBuilder<RecipesBloc, RecipesState>(
+            child: BlocBuilder<DinnerRecipesBloc, DinnerRecipesState>(
                 builder: (context, state) {
-              if (state is RecipesLoadingState) {
+              if (state is DinnerRecipesLoadingState) {
                 return Column(children: [
                   SizedBox(
                     height: 24,
@@ -94,9 +96,9 @@ class _HomePageState extends State<HomePage> {
                     children: [CircularProgressIndicator()],
                   ),
                 ]);
-              } else if (state is SearchErrorState) {
+              } else if (state is DinnerSearchErrorState) {
                 return _error(state.errorMsg);
-              } else if (state is ContentAvailableState) {
+              } else if (state is DinnerContentAvailableState) {
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
@@ -131,9 +133,9 @@ class _HomePageState extends State<HomePage> {
           Container(height: 25),
           ConstrainedBox(
             constraints: BoxConstraints(maxHeight: 250),
-            child: BlocBuilder<RecipesBloc, RecipesState>(
+            child: BlocBuilder<DinnerRecipesBloc, DinnerRecipesState>(
                 builder: (context, state) {
-              if (state is RecipesLoadingState) {
+              if (state is DinnerRecipesLoadingState) {
                 return Column(children: [
                   SizedBox(
                     height: 24,
@@ -143,9 +145,9 @@ class _HomePageState extends State<HomePage> {
                     children: [CircularProgressIndicator()],
                   ),
                 ]);
-              } else if (state is SearchErrorState) {
+              } else if (state is DinnerSearchErrorState) {
                 return _error(state.errorMsg);
-              } else if (state is ContentAvailableState) {
+              } else if (state is DinnerContentAvailableState) {
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
