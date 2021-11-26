@@ -94,7 +94,7 @@ class _RecipeSearchState extends State<RecipeSearch> {
                           )),
                     ),
                   ),
-                  Text("filtros")
+                  Text("filters")
                 ],
               ),
             ),

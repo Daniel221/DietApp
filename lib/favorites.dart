@@ -105,7 +105,7 @@ class _FavoritesState extends State<Favorites> {
         children: [
           Center(
             child: Text(
-              "Favoritos",
+              "Favorites",
               style: TextStyle(fontSize: 28),
             ),
           ),
