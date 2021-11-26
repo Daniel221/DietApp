@@ -33,25 +33,32 @@ class CardController {
             Expanded(
               child: Stack(
                 children: [
-                  Image.network(
-                    recipe.image ??
-                        "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg",
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
-                    },
-                    height: 160,
-                    width: 150,
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(recipe.image ??
+                              "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg"),
+                          fit: BoxFit.fill),
+                    ),
+                    // child: Image.network(
+                    //   recipe.image ??
+                    //       "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg",
+                    //   loadingBuilder: (BuildContext context, Widget child,
+                    //       ImageChunkEvent? loadingProgress) {
+                    //     if (loadingProgress == null) {
+                    //       return child;
+                    //     }
+                    //     return Center(
+                    //       child: CircularProgressIndicator(
+                    //         value: loadingProgress.expectedTotalBytes != null
+                    //             ? loadingProgress.cumulativeBytesLoaded /
+                    //                 loadingProgress.expectedTotalBytes!
+                    //             : null,
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -64,7 +71,7 @@ class CardController {
             ),
             Container(
               padding: const EdgeInsets.all(8.0),
-              height: 68,
+              height: 65,
               child: Text(
                 "${recipe.label}",
                 overflow: TextOverflow.fade,

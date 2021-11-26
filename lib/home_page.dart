@@ -58,9 +58,9 @@ class _HomePageState extends State<HomePage> {
                   itemCount: state.totalHits,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
-                      margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
+                      margin: EdgeInsets.fromLTRB(0, 20, 30, 20),
                       height: 240,
-                      width: 260,
+                      width: 180,
                       child: CardController.createCard(
                         context,
                         state.recipesList[index].recipe!,
@@ -107,9 +107,9 @@ class _HomePageState extends State<HomePage> {
                   itemCount: state.totalHits,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
-                      margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
+                      margin: EdgeInsets.fromLTRB(0, 20, 30, 20),
                       height: 240,
-                      width: 260,
+                      width: 180,
                       child: CardController.createCard(
                         context,
                         state.recipesList[index].recipe!,
@@ -156,9 +156,9 @@ class _HomePageState extends State<HomePage> {
                   itemCount: state.totalHits,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
-                      margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
+                      margin: EdgeInsets.fromLTRB(0, 20, 30, 20),
                       height: 240,
-                      width: 260,
+                      width: 180,
                       child: CardController.createCard(
                         context,
                         state.recipesList[index].recipe!,

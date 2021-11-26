@@ -16,13 +16,15 @@ class Favorites extends StatefulWidget {
 class _FavoritesState extends State<Favorites> {
   Recipe _convertToRecipe(Map<String, dynamic> recipe) {
     return Recipe(
-        label: recipe["label"],
-        image: recipe["image"],
-        dishType: recipe["dishType"],
-        cuisineType: recipe["cuisineType"],
-        mealType: recipe["mealType"],
-        ingredientLines: recipe["ingredientLines"],
-        healthLabels: recipe["healthLabels"]);
+      label: recipe["label"],
+      image: recipe["image"],
+      dishType: recipe["dishType"],
+      cuisineType: recipe["cuisineType"],
+      mealType: recipe["mealType"],
+      ingredientLines: recipe["ingredientLines"],
+      healthLabels: recipe["healthLabels"],
+      calories: recipe["calories"],
+    );
   }
 
   Widget _card(Recipe recipe) {
@@ -41,25 +43,14 @@ class _FavoritesState extends State<Favorites> {
             Expanded(
               child: Stack(
                 children: [
-                  Image.network(
-                    recipe.image ??
-                        "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg",
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
-                    },
-                    height: 160,
-                    width: 150,
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(recipe.image ??
+                              "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg"),
+                          fit: BoxFit.fill),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

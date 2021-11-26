@@ -20,15 +20,6 @@ class _RecetaState extends State<Receta> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.settings,
-              color: Color(0xFFABABAB),
-            ),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -45,35 +36,29 @@ class _RecetaState extends State<Receta> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                    "${widget.recipeDetails.dishType![0]} ${widget.recipeDetails.cuisineType![0]} ${widget.recipeDetails.mealType![0]}"),
-                SizedBox(height: 20),
-                Image.network(
-                  // "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg",
-                  widget.recipeDetails != Null
-                      ? widget.recipeDetails.image!
-                      : "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg",
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes!
-                            : null,
-                      ),
-                    );
-                  },
-                  // height: 160,
-                  // width: 150,
+                  "${widget.recipeDetails.calories!.toStringAsFixed(0)}kcl",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
-                // SizedBox(
-                //   height: 142,
-                //   width: 343,
-                //   child: Placeholder(),
-                // ),
+                Text(
+                    "${widget.recipeDetails.dishType![0]} ${widget.recipeDetails.cuisineType![0]} ${widget.recipeDetails.mealType![0]}",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontStyle: FontStyle.italic,
+                    )),
+                SizedBox(height: 20),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: NetworkImage(widget.recipeDetails.image ??
+                            "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg"),
+                        fit: BoxFit.fill),
+                  ),
+                ),
                 SizedBox(height: 20),
                 Text(
                   "Ingredients",
@@ -81,17 +66,21 @@ class _RecetaState extends State<Receta> {
                 ),
                 SizedBox(height: 20),
                 ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: widget.recipeDetails.ingredientLines!.length,
-                  itemBuilder: (BuildContext context, int index) => Text(
-                      "${widget.recipeDetails.ingredientLines![index]} \n"),
-                ),
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: widget.recipeDetails.ingredientLines!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                          title: Text(
+                              "${widget.recipeDetails.ingredientLines![index]} \n"));
+                    }),
                 SizedBox(height: 20),
                 Text(
                   "Labels",
                   style: TextStyle(fontSize: 30),
                 ),
                 ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: widget.recipeDetails.healthLabels!.length,
                   itemBuilder: (BuildContext context, int index) =>

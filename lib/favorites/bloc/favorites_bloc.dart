@@ -64,6 +64,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
       "mealType": recipe.mealType,
       "ingredientLines": recipe.ingredientLines,
       "healthLabels": recipe.healthLabels,
+      "calories": recipe.calories,
     });
     print("Add favorite!");
 

@@ -19,10 +19,59 @@ class _RecipeSearchState extends State<RecipeSearch> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(10, 25, 0, 0),
-      child: ListView(
+      margin: EdgeInsets.fromLTRB(10, 32, 0, 0),
+      child: Stack(
         children: [
-          Center(
+          Container(
+            margin: EdgeInsets.only(top: 25),
+            child: ListView(
+              children: [
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 260),
+                  child: BlocBuilder<RecipesBloc, RecipesState>(
+                      builder: (context, state) {
+                    if (state is RecipesLoadingState) {
+                      return Column(children: [
+                        SizedBox(
+                          height: 24,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [CircularProgressIndicator()],
+                        ),
+                      ]);
+                    } else if (state is SearchErrorState) {
+                      return _error(state.errorMsg);
+                    } else if (state is ContentAvailableState) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: ScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemCount: state.totalHits,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
+                            height: 240,
+                            width: 260,
+                            child: CardController.createCard(
+                              context,
+                              state.recipesList[index].recipe!,
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    return Center(
+                      child: Text("Recetas"),
+                    );
+                  }),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            color: Colors.white,
+            padding: EdgeInsets.only(bottom: 10),
             child: Row(
               children: [
                 Container(
@@ -46,46 +95,6 @@ class _RecipeSearchState extends State<RecipeSearch> {
                 Text("filtros")
               ],
             ),
-          ),
-          ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 260),
-            child: BlocBuilder<RecipesBloc, RecipesState>(
-                builder: (context, state) {
-              if (state is RecipesLoadingState) {
-                return Column(children: [
-                  SizedBox(
-                    height: 24,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [CircularProgressIndicator()],
-                  ),
-                ]);
-              } else if (state is SearchErrorState) {
-                return _error(state.errorMsg);
-              } else if (state is ContentAvailableState) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: ScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  itemCount: state.totalHits,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
-                      height: 240,
-                      width: 260,
-                      child: CardController.createCard(
-                        context,
-                        state.recipesList[index].recipe!,
-                      ),
-                    );
-                  },
-                );
-              }
-              return Center(
-                child: Text("Recetas"),
-              );
-            }),
           ),
         ],
       ),

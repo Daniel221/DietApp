@@ -1,4 +1,3 @@
-
 import 'package:diet_app/breakfast/bloc/breakfast_recipes_bloc.dart';
 import 'package:diet_app/dinner/bloc/dinner_recipes_bloc.dart';
 import 'package:diet_app/lunch/bloc/lunch_recipes_bloc.dart';
@@ -10,6 +9,7 @@ import 'package:diet_app/user_info/bloc/info_bloc.dart';
 import 'package:diet_app/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'favorites/bloc/favorites_bloc.dart';
@@ -55,6 +55,10 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       home: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {},
