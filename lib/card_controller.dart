@@ -23,15 +23,32 @@ class CardController {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Placeholder(
-              fallbackHeight: 160,
-              fallbackWidth: 150,
-            ),
-            // Image.network(
-            //   img,
-            //   height: 160,
-            //   width: 150,
+            // Placeholder(
+            //   fallbackHeight: 160,
+            //   fallbackWidth: 150,
             // ),
+            Image.network(
+              // "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg",
+              recipe != Null
+                  ? recipe.image!
+                  : "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg",
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                }
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                        : null,
+                  ),
+                );
+              },
+              height: 160,
+              width: 150,
+            ),
             Container(
               padding: const EdgeInsets.all(8.0),
               height: 68,
