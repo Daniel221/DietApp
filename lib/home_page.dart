@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
           ),
           Container(height: 25),
           ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 250),
+            constraints: BoxConstraints(maxHeight: 286),
             child: BlocBuilder<BreakfastRecipesBloc, BreakfastRecipesState>(
                 builder: (context, state) {
               if (state is BreakfastRecipesLoadingState) {
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
           ),
           Container(height: 25),
           ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 250),
+            constraints: BoxConstraints(maxHeight: 286),
             child: BlocBuilder<DinnerRecipesBloc, DinnerRecipesState>(
                 builder: (context, state) {
               if (state is DinnerRecipesLoadingState) {
@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
           ),
           Container(height: 25),
           ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 250),
+            constraints: BoxConstraints(maxHeight: 286),
             child: BlocBuilder<DinnerRecipesBloc, DinnerRecipesState>(
                 builder: (context, state) {
               if (state is DinnerRecipesLoadingState) {

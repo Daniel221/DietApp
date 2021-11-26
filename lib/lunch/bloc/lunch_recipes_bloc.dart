@@ -30,7 +30,7 @@ class LunchRecipesBloc extends Bloc<LunchRecipesEvent, LunchRecipesState> {
       }
     });
 
-    on<SearchRecipeEvent>((event, emitState) async {
+    on<SearchLunchRecipeEvent>((event, emitState) async {
       try {
         emitState(LunchRecipesLoadingState());
         var recipes = await _recipesRepository.searchRecipes(event.queryText);
@@ -45,7 +45,7 @@ class LunchRecipesBloc extends Bloc<LunchRecipesEvent, LunchRecipesState> {
       }
     });
 
-    on<RecipeDetailEvent>((event, emitState) async {
+    on<LunchRecipeDetailEvent>((event, emitState) async {
       try {
         emitState(LunchRecipesLoadingState());
         var recipe = await _recipesRepository.getRecipe(event.recipeURI);

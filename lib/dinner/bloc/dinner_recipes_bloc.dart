@@ -30,7 +30,7 @@ class DinnerRecipesBloc extends Bloc<DinnerRecipesEvent, DinnerRecipesState> {
       }
     });
 
-    on<SearchRecipeEvent>((event, emitState) async {
+    on<SearchDinnerRecipeEvent>((event, emitState) async {
       try {
         emitState(DinnerRecipesLoadingState());
         var recipes = await _recipesRepository.searchRecipesMealType("Dinner");
@@ -45,7 +45,7 @@ class DinnerRecipesBloc extends Bloc<DinnerRecipesEvent, DinnerRecipesState> {
       }
     });
 
-    on<RecipeDetailEvent>((event, emitState) async {
+    on<DinnerRecipeDetailEvent>((event, emitState) async {
       try {
         emitState(DinnerRecipesLoadingState());
         var recipe = await _recipesRepository.getRecipe(event.recipeURI);

@@ -7,10 +7,10 @@ abstract class DinnerRecipesEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class SearchRecipeEvent extends DinnerRecipesEvent {
+class SearchDinnerRecipeEvent extends DinnerRecipesEvent {
   final String queryText;
 
-  SearchRecipeEvent({required this.queryText});
+  SearchDinnerRecipeEvent({required this.queryText});
   @override
   List<Object> get props => [queryText];
 }
@@ -22,10 +22,10 @@ class AllDinnerRecipesEvent extends DinnerRecipesEvent {
   List<Object> get props => [];
 }
 
-class RecipeDetailEvent extends DinnerRecipesEvent {
+class DinnerRecipeDetailEvent extends DinnerRecipesEvent {
   final String recipeURI;
 
-  RecipeDetailEvent({required this.recipeURI});
+  DinnerRecipeDetailEvent({required this.recipeURI});
   @override
   List<Object> get props => [];
 }

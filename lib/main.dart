@@ -21,9 +21,6 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<RecipesBloc>(
-          create: (context) => RecipesBloc()..add(AllRecipesEvent()),
-        ),
         BlocProvider<BreakfastRecipesBloc>(
           create: (context) =>
               BreakfastRecipesBloc()..add(AllBreakfastRecipesEvent()),
@@ -40,6 +37,9 @@ void main() async {
         ),
         BlocProvider<InfoBloc>(
           create: (context) => InfoBloc()..add(UserInfoEvent()),
+        ),
+        BlocProvider<RecipesBloc>(
+          create: (context) => RecipesBloc()..add(AllRecipesEvent()),
         ),
       ],
       child: MyApp(),
