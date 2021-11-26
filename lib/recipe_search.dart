@@ -72,28 +72,31 @@ class _RecipeSearchState extends State<RecipeSearch> {
           Container(
             color: Colors.white,
             padding: EdgeInsets.only(bottom: 10),
-            child: Row(
-              children: [
-                Container(
-                  width: 320,
-                  child: TextFormField(
-                    controller: searchController,
-                    decoration: InputDecoration(
-                        hintText: "orange",
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            BlocProvider.of<RecipesBloc>(context).add(
-                              SearchRecipeEvent(
-                                queryText: searchController.text,
-                              ),
-                            );
-                          },
-                          icon: Icon(Icons.search),
-                        )),
+            child: Container(
+              margin: EdgeInsets.only(left: 30),
+              child: Row(
+                children: [
+                  Container(
+                    width: 280,
+                    child: TextFormField(
+                      controller: searchController,
+                      decoration: InputDecoration(
+                          hintText: "orange",
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              BlocProvider.of<RecipesBloc>(context).add(
+                                SearchRecipeEvent(
+                                  queryText: searchController.text,
+                                ),
+                              );
+                            },
+                            icon: Icon(Icons.search),
+                          )),
+                    ),
                   ),
-                ),
-                Text("filtros")
-              ],
+                  Text("filtros")
+                ],
+              ),
             ),
           ),
         ],

@@ -88,7 +88,7 @@ class RecipesRepository {
         "app_key": "5855870c7063ce2c4810878b6290b022",
         "type": "public",
         "q": "pumpkin",
-        "mealType": mealType
+        "mealType": mealType,
       },
     );
     try {
@@ -119,7 +119,7 @@ class RecipesRepository {
         "app_key": "5855870c7063ce2c4810878b6290b022",
         "type": "public",
         "q": "Ham",
-        "mealType": mealType
+        "mealType": mealType,
       },
     );
     try {
