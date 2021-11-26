@@ -22,14 +22,14 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
 
     on<AddFavoritesEvent>((event, emit) async {
       try {
-        bool saved = await _addFavorite(event.food);
+        bool saved = await _addFavorite(event.recipe);
         emit(FavoritesChangeSuccessState(saved: saved));
       } catch (e) {}
     });
 
     on<RemoveFavoriteEvent>((event, emit) async {
       try {
-        bool removed = await _removeFavorite(event.food);
+        bool removed = await _removeFavorite(event.label);
         emit(FavoritesChangeSuccessState(saved: removed));
       } catch (e) {}
     });
@@ -50,30 +50,35 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     }
   }
 
-  Future<bool> _addFavorite(food) async {
+  Future<bool> _addFavorite(Recipe recipe) async {
     await FirebaseFirestore.instance
-            .collection('users')
-            .doc(FirebaseAuth.instance.currentUser!.uid.toString())
-            .collection('favorites') // id del usuario autenticado
-            .doc('food name') //TODO: food["label"]
-        // .set({
-        //   "label": food["name"],
-        //   "estatura": food["estatura"],
-        //   "peso": food["peso"],
-        //   "porcentaje": food["porcentaje"],
-        //   // "password": user["password"],
-        // })
-        ;
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid.toString())
+        .collection('favorites') // id del usuario autenticado
+        .doc(recipe.label)
+        .set({
+      "label": recipe.label,
+      "image": recipe.image,
+      "dishType": recipe.dishType,
+      "cuisineType": recipe.cuisineType,
+      "mealType": recipe.mealType,
+      "ingredientLines": recipe.ingredientLines,
+      "healthLabels": recipe.healthLabels,
+    });
+    print("Add favorite!");
+
     return true;
   }
 
-  Future<bool> _removeFavorite(food) async {
+  Future<bool> _removeFavorite(String? label) async {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid.toString())
         .collection('favorites')
-        .doc('title') //TODO: food["label"]
+        .doc(label)
         .delete();
+
+    print("Remove favorite!");
     return true;
   }
 }

@@ -26,7 +26,7 @@ void main() async {
         ),
         BlocProvider<FavoritesBloc>(
           create: (context) => FavoritesBloc(),
-        )
+        ),
       ],
       child: MyApp(),
     ),

@@ -8,21 +8,21 @@ abstract class FavoritesEvent extends Equatable {
 }
 
 class AddFavoritesEvent extends FavoritesEvent {
-  final food;
+  final Recipe recipe;
 
-  AddFavoritesEvent({required this.food});
+  AddFavoritesEvent({required this.recipe});
 
   @override
-  List<Object> get props => [food];
+  List<Object> get props => [recipe];
 }
 
 class RemoveFavoriteEvent extends FavoritesEvent {
-  final food;
+  final String? label;
 
-  RemoveFavoriteEvent({required this.food});
+  RemoveFavoriteEvent({required this.label});
 
   @override
-  List<Object> get props => [food];
+  List<Object> get props => [label.toString()];
 }
 
 class GetAllFavoritesEvent extends FavoritesEvent {}

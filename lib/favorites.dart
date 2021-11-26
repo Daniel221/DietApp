@@ -1,6 +1,8 @@
 import 'package:diet_app/card_controller.dart';
+import 'package:diet_app/db_connection.dart';
 import 'package:diet_app/favorites/bloc/favorites_bloc.dart';
 import 'package:diet_app/models/recipe.dart';
+import 'package:diet_app/receta.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,22 +10,104 @@ class Favorites extends StatefulWidget {
   Favorites({Key? key}) : super(key: key);
 
   @override
-  _FavoritesState createState() => _FavoritesState();
+  State<Favorites> createState() => _FavoritesState();
 }
 
 class _FavoritesState extends State<Favorites> {
-  @override
-  void initState() {
-    BlocProvider.of<FavoritesBloc>(context).add(GetAllFavoritesEvent());
-    super.initState();
+  Recipe _convertToRecipe(Map<String, dynamic> recipe) {
+    return Recipe(
+        label: recipe["label"],
+        image: recipe["image"],
+        dishType: recipe["dishType"],
+        cuisineType: recipe["cuisineType"],
+        mealType: recipe["mealType"],
+        ingredientLines: recipe["ingredientLines"],
+        healthLabels: recipe["healthLabels"]);
   }
 
-  Recipe _convertToRecipe(Map<String, dynamic> recipe) {
-    return Recipe(label: recipe["label"]);
+  Widget _card(Recipe recipe) {
+    return Card(
+      elevation: 8,
+      clipBehavior: Clip.antiAlias,
+      child: new InkWell(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => Receta(recipeDetails: recipe)));
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  Image.network(
+                    recipe.image ??
+                        "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg",
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      );
+                    },
+                    height: 160,
+                    width: 150,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FutureBuilder(
+                        future: getFavorite(recipe.label),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          return IconButton(
+                            onPressed: () {
+                              removeFavorite(recipe.label);
+                              BlocProvider.of<FavoritesBloc>(context)
+                                  .add(GetAllFavoritesEvent());
+                            },
+                            icon: Icon(
+                              Icons.favorite,
+                              color: Colors.red[300],
+                              size: 33,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              height: 68,
+              child: Text(
+                "${recipe.label}",
+                overflow: TextOverflow.fade,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<FavoritesBloc>(context).add(GetAllFavoritesEvent());
     return Container(
       margin: EdgeInsets.fromLTRB(10, 25, 0, 0),
       child: ListView(
@@ -58,37 +142,19 @@ class _FavoritesState extends State<Favorites> {
                   scrollDirection: Axis.vertical,
                   itemCount: state.favoritesAmount,
                   itemBuilder: (BuildContext context, int index) {
-                    print(index);
-                    print(state.favoritesList.runtimeType);
                     return Container(
                       margin: EdgeInsets.fromLTRB(30, 25, 30, 25),
                       height: 240,
                       width: 260,
-                      child: CardController.createCard(
-                        context,
-                        _convertToRecipe(state.favoritesList[index]),
-                      ),
+                      child:
+                          _card(_convertToRecipe(state.favoritesList[index])),
                     );
                   },
                 );
               }
-              return CircularProgressIndicator();
+              return Expanded(child: CircularProgressIndicator());
             }),
           ),
-          // ConstrainedBox(
-          //   constraints: BoxConstraints(maxWidth: 400),
-          //   child: GridView.builder(
-          //       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          //           maxCrossAxisExtent: 200,
-          //           childAspectRatio: 3 / 2,
-          //           crossAxisSpacing: 20,
-          //           mainAxisSpacing: 20),
-          //       itemCount: CardController.testList.length,
-          //       itemBuilder: (context, index) {
-          //         return CardController.createCard(
-          //             CardController.testList[index], "");
-          //       }),
-          // ),
         ],
       ),
     );
