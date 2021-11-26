@@ -22,7 +22,7 @@ class _UserState extends State<User> {
         children: [
           Center(
             child: Text(
-              "Información del usuario",
+              "User info.",
               style: TextStyle(fontSize: 28),
             ),
           ),
@@ -56,24 +56,25 @@ class _UserState extends State<User> {
                           ),
                           Card(
                             child: ListTile(
-                              leading: Text('Nombre: ${state.info["name"]}'),
+                              leading: Text('Name: ${state.info["name"]}'),
+                            ),
+                          ),
+                          Card(
+                            child: ListTile(
+                              leading:
+                                  Text('Height: ${state.info["estatura"]} m.'),
+                            ),
+                          ),
+                          Card(
+                            child: ListTile(
+                              leading:
+                                  Text('Weight: ${state.info["peso"]} kg.'),
                             ),
                           ),
                           Card(
                             child: ListTile(
                               leading: Text(
-                                  'Estatura: ${state.info["estatura"]} m.'),
-                            ),
-                          ),
-                          Card(
-                            child: ListTile(
-                              leading: Text('Peso: ${state.info["peso"]} kg.'),
-                            ),
-                          ),
-                          Card(
-                            child: ListTile(
-                              leading: Text(
-                                  'Porcentaje de grasa: ${state.info["porcentaje"]} %'),
+                                  'Average fat: ${state.info["porcentaje"]} %'),
                             ),
                           ),
                         ],

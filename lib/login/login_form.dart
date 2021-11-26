@@ -85,7 +85,7 @@ class _LoginFormState extends State<LoginForm> {
                   builder: (context) {
                     return AlertDialog(
                         title: Text(
-                          'Error al hacer login',
+                          "Couldn't login",
                         ),
                         content: Text('${state.error}:\n${state.code}'));
                   },
@@ -123,7 +123,7 @@ class _LoginFormState extends State<LoginForm> {
                                   height: 20,
                                 ),
                                 Text(
-                                  'Ingresa a tu cuenta',
+                                  'Access your account',
                                   style: TextStyle(
                                     fontSize: 15,
                                     color: Colors.grey[700],
