@@ -45,20 +45,28 @@ class RecipesRepository {
     }
   }
 
-  Future<Recipes> searchRecipes(String searchTerm) async {
+  Future<Recipes> searchRecipes(
+      String searchTerm, Map<String, String> parameters) async {
     // final String URL =
     //     "https://api.edamam.com/api/recipes/v2?app_id=8e34028a&app_key=5855870c7063ce2c4810878b6290b022&type=public&q=steak";
+    Map<String, dynamic> query_parameters = {
+      "app_id": "8e34028a",
+      "app_key": "5855870c7063ce2c4810878b6290b022",
+      "type": "public",
+      "q": searchTerm,
+    };
+
+    parameters.forEach((key, value) {
+      if (value != "All" && value != "None") {
+        query_parameters[key] = value;
+      }
+    });
 
     final _url = Uri(
       scheme: "https",
       host: "api.edamam.com",
       path: "api/recipes/v2",
-      queryParameters: {
-        "app_id": "8e34028a",
-        "app_key": "5855870c7063ce2c4810878b6290b022",
-        "type": "public",
-        "q": searchTerm,
-      },
+      queryParameters: query_parameters,
     );
     try {
       Response response = await get(_url);

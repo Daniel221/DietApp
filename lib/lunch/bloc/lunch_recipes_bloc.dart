@@ -33,7 +33,8 @@ class LunchRecipesBloc extends Bloc<LunchRecipesEvent, LunchRecipesState> {
     on<SearchLunchRecipeEvent>((event, emitState) async {
       try {
         emitState(LunchRecipesLoadingState());
-        var recipes = await _recipesRepository.searchRecipes(event.queryText);
+        var recipes =
+            await _recipesRepository.searchRecipes(event.queryText, {});
         emitState(LunchContentAvailableState(
           recipesList: recipes.hits ?? [],
           totalHits: (((recipes.from ?? 0) - 1) + (recipes.to ?? 0)),

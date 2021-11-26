@@ -36,7 +36,8 @@ class BreakfastRecipesBloc
     on<SearchRecipeEvent>((event, emitState) async {
       try {
         emitState(BreakfastRecipesLoadingState());
-        var recipes = await _recipesRepository.searchRecipes(event.queryText);
+        var recipes =
+            await _recipesRepository.searchRecipes(event.queryText, {});
         emitState(BreakfastContentAvailableState(
           recipesList: recipes.hits ?? [],
           totalHits: (((recipes.from ?? 0) - 1) + (recipes.to ?? 0)),

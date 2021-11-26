@@ -52,6 +52,7 @@ void main() async {
   );
 }
 
+//0xFF6b9080
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -60,6 +61,10 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Color(0xFF6b9080),
+        primarySwatch: Colors.green,
+      ),
       home: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {},
         builder: (context, state) {

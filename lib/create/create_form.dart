@@ -58,6 +58,10 @@ class _CreateFormState extends State<CreateForm> {
     return Scaffold(
       backgroundColor: Color(0xFFcce3de),
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         automaticallyImplyLeading: false,
         title: Text('Personal info.'),
         actions: [

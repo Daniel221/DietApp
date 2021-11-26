@@ -9,10 +9,11 @@ abstract class RecipesEvent extends Equatable {
 
 class SearchRecipeEvent extends RecipesEvent {
   final String queryText;
+  final Map<String, String> parameters;
 
-  SearchRecipeEvent({required this.queryText});
+  SearchRecipeEvent({required this.queryText, required this.parameters});
   @override
-  List<Object> get props => [queryText];
+  List<Object> get props => [queryText, parameters];
 }
 
 class AllRecipesEvent extends RecipesEvent {
