@@ -1,3 +1,4 @@
+
 import 'package:diet_app/breakfast/bloc/breakfast_recipes_bloc.dart';
 import 'package:diet_app/dinner/bloc/dinner_recipes_bloc.dart';
 import 'package:diet_app/lunch/bloc/lunch_recipes_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'favorites/bloc/favorites_bloc.dart';
 import 'home/home_page.dart';
 
 void main() async {
@@ -34,6 +36,9 @@ void main() async {
         ),
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc()..add(VerifyAuthEvent()),
+        ),
+        BlocProvider<FavoritesBloc>(
+          create: (context) => FavoritesBloc(),
         ),
         BlocProvider<InfoBloc>(
           create: (context) => InfoBloc()..add(UserInfoEvent()),
