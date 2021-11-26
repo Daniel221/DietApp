@@ -59,15 +59,16 @@ class _CreateFormState extends State<CreateForm> {
       backgroundColor: Color(0xFFcce3de),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('Ingresar información'),
+        title: Text('Personal info.'),
         actions: [
-          IconButton(
-            onPressed: () {
-              // agregar evento a bloc auth para desautenticar
-              BlocProvider.of<AuthBloc>(context).add(SignOutAuthEvent());
-            },
-            icon: Icon(FontAwesomeIcons.signOutAlt),
-          ),
+          // IconButton(
+          //   onPressed: () {
+          //     // agregar evento a bloc auth para desautenticar
+          //     BlocProvider.of<AuthBloc>(context).add(SignOutAuthEvent());
+          //     print('bye');
+          //   },
+          //   icon: Icon(FontAwesomeIcons.signOutAlt),
+          // ),
         ],
         // backgroundColor: Color(0xFFcce3de),
         backgroundColor: Color(0xFF6b9080),
@@ -90,7 +91,7 @@ class _CreateFormState extends State<CreateForm> {
                 ),
               );
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Información guardada')),
+                const SnackBar(content: Text('Info. saved')),
               );
             }
           },
@@ -121,7 +122,7 @@ class _CreateFormState extends State<CreateForm> {
                           maxRadius: 24,
                           backgroundColor: Colors.grey[200],
                           child: IconButton(
-                            tooltip: 'Tomar foto',
+                            tooltip: 'Take picture',
                             color: Colors.black87,
                             icon: Icon(FontAwesomeIcons.cameraRetro),
                             onPressed: () async {
@@ -139,7 +140,7 @@ class _CreateFormState extends State<CreateForm> {
                 ),
                 TextFormField(
                   decoration: InputDecoration(
-                    label: Text('Nombre'),
+                    label: Text('Name'),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -147,7 +148,7 @@ class _CreateFormState extends State<CreateForm> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Ingresa tu nombre';
+                      return 'Type in your name';
                     } else {
                       name = value;
                     }
@@ -158,7 +159,7 @@ class _CreateFormState extends State<CreateForm> {
                 TextFormField(
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    label: Text('Estatura'),
+                    label: Text('Height'),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -166,7 +167,7 @@ class _CreateFormState extends State<CreateForm> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Ingresa tu estatura';
+                      return 'Type in your height';
                     } else {
                       estatura = double.parse(value);
                     }
@@ -177,7 +178,7 @@ class _CreateFormState extends State<CreateForm> {
                 TextFormField(
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    label: Text('Peso'),
+                    label: Text('Weight'),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -185,7 +186,7 @@ class _CreateFormState extends State<CreateForm> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Ingresa tu peso';
+                      return 'Type in your weight';
                     } else {
                       peso = double.parse(value);
                     }
@@ -196,7 +197,7 @@ class _CreateFormState extends State<CreateForm> {
                 TextFormField(
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    label: Text('Porcentaje de grasa'),
+                    label: Text('Average fat'),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -204,7 +205,7 @@ class _CreateFormState extends State<CreateForm> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Ingresa tu porcentaje';
+                      return 'Type in your average fat';
                     } else {
                       porcentaje = double.parse(value);
                     }
@@ -248,7 +249,7 @@ class _CreateFormState extends State<CreateForm> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: Text(
-                    'Guardar',
+                    'Save info.',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,

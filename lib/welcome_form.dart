@@ -98,7 +98,7 @@ class _WelcomeFormState extends State<WelcomeForm> {
                   builder: (context) {
                     return AlertDialog(
                         title: Text(
-                          'Error al hacer login',
+                          "Couldn't login",
                         ),
                         content: Text('${state.error}:\n${state.code}'));
                   },
@@ -130,7 +130,7 @@ class _WelcomeFormState extends State<WelcomeForm> {
                         Column(
                           children: [
                             Text(
-                              'Bienvenido',
+                              'Welcome!',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 30,
@@ -138,7 +138,7 @@ class _WelcomeFormState extends State<WelcomeForm> {
                             ),
                             SizedBox(height: 20),
                             Text(
-                              'DietApp es la aplicación perfecta para ti que quieres cuidar de tu salud.',
+                              'DietApp is the perfect app for you that wishes to take care of yourself.',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.grey[700],
@@ -173,7 +173,7 @@ class _WelcomeFormState extends State<WelcomeForm> {
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               child: Text(
-                                'Ingresar',
+                                'Login',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
