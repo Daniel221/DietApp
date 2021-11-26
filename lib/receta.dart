@@ -20,15 +20,6 @@ class _RecetaState extends State<Receta> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.settings,
-              color: Color(0xFFABABAB),
-            ),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -44,35 +35,57 @@ class _RecetaState extends State<Receta> {
                   ),
                 ),
                 SizedBox(height: 10),
-                SizedBox(
-                  height: 142,
-                  width: 343,
-                  child: Placeholder(),
+                Text(
+                  "${widget.recipeDetails.calories!.toStringAsFixed(0)}kcl",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                Text(
+                    "${widget.recipeDetails.dishType![0]} ${widget.recipeDetails.cuisineType![0]} ${widget.recipeDetails.mealType![0]}",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontStyle: FontStyle.italic,
+                    )),
+                SizedBox(height: 20),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: NetworkImage(widget.recipeDetails.image ??
+                            "https://pbs.twimg.com/profile_images/1014984404769394688/px4PTUZm_400x400.jpg"),
+                        fit: BoxFit.fill),
+                  ),
                 ),
                 SizedBox(height: 20),
                 Text(
                   "Ingredients",
                   style: TextStyle(fontSize: 30),
                 ),
-                ListTile(
-                  leading: Text("1 Cup", style: TextStyle(fontSize: 15)),
-                  title: Text("Milt"),
-                ),
-                ListTile(
-                  leading: Text("1 Teaspoon", style: TextStyle(fontSize: 15)),
-                  title: Text("Sugar"),
-                ),
-                ListTile(
-                  leading: Text("1 Tablespoon", style: TextStyle(fontSize: 15)),
-                  title: Text("Cinnamon"),
-                ),
+                SizedBox(height: 20),
+                ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: widget.recipeDetails.ingredientLines!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                          title: Text(
+                              "${widget.recipeDetails.ingredientLines![index]} \n"));
+                    }),
                 SizedBox(height: 20),
                 Text(
-                  "Steps",
+                  "Labels",
                   style: TextStyle(fontSize: 30),
                 ),
-                Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt in diam in ultrices. Integer rhoncus ipsum eget efficitur sagittis. Sed ligula nunc, tincidunt mollis suscipit sit amet, semper ac ante. Cras nec lacinia odio, laoreet pharetra mi. In maximus dignissim metus vel tristique. In tincidunt nisl at ligula congue hendrerit. Donec dapibus tortor ut metus lobortis, id maximus lorem blandit. Proin et libero interdum, commodo tortor euismod, ullamcorper lorem. Phasellus sed nunc nisl. Mauris")
+                ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: widget.recipeDetails.healthLabels!.length,
+                  itemBuilder: (BuildContext context, int index) =>
+                      Text("${widget.recipeDetails.healthLabels![index]}"),
+                ),
               ],
             ),
           ),
@@ -80,4 +93,8 @@ class _RecetaState extends State<Receta> {
       ),
     );
   }
+}
+
+Widget _ingredients(dynamic ing) {
+  return Text("${ing} \n");
 }
